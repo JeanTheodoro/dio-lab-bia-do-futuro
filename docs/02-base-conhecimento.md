@@ -17,12 +17,9 @@ Todos os dados presentes nessa base foram **criados de forma fictícia**, sendo 
 | Arquivo | Formato | Utilização dos dado pelo Aurora |
 |---------|---------|---------------------|
 | `clientes.csv` | CSV | Contextualizar as informações do cliente. |
-| `contas_correntes.csv` | CSV | Contextualiza o saldo atual do cliente | 
-| `produtos_financeiros.csv` | CSV | Conhecer os produtos disponíveis para que eles possam ser 
-ensinados ao cliente.| 
-| `transacoes.csv` | CSV | Analizar padrão
-de gastos e ganhos do cliente e usar
-essas infromaçãoes de forma didática |
+| `contas_correntes.csv` | CSV | Contextualiza o saldo atual do cliente. | 
+| `produtos_financeiros.csv` | CSV | Conhecer os produtos disponíveis para que eles possam ser ensinados ao cliente.| 
+| `transacoes.csv` | CSV | Analizar padrão de gastos e ganhos do cliente e usar essas infromaçãoes de forma didática. |
 
 > [!TIP]
 > **Quer um dataset mais robusto?** Você pode utilizar datasets públicos do [Hugging Face](https://huggingface.co/datasets) relacionados a finanças, desde que sejam adequados ao contexto do desafio.
