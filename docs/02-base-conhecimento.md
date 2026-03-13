@@ -2,7 +2,7 @@
 
 ## Dados Utilizados
 
-Essa base foi estruturada a partir do conjunto de dados original disponibilizado na pasta `data\base_de_conhecimento`, com o objetivo de criar uma **base de conhecimento relacional** que permita consultas e recuperação de informações de forma estruturada.
+Essa base foi estruturada a partir do conjunto de dados original disponibilizado na pasta [`data/base_de_conhecimento`](../data/base_de_conhecimento/), com o objetivo de criar uma **base de conhecimento relacional** que permita consultas e recuperação de informações de forma estruturada.
 
 O objetivo dessa organização é possibilitar que a agente Aurora acesse informações financeiras dos clientes por meio de consultas ao banco de dados, permitindo responder perguntas como:
 
@@ -108,9 +108,17 @@ PRODUTOS_FINANCEIROS ||--o{ CONTAS_INVESTIMENTO : investimento
 CLIENTES ||--o{ METAS : define
 CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
 ```
+Os comandos para criação das tabelas da modelagem do banco de dados apresentada anteriormente estão disponíveis no arquivo: [`data/sql/criar_tabelas.sql`](../data/sql/criar_tabelas.sql)
 
----
+Esse script contém todas as instruções SQL necessárias para criação do schema, sequências e tabelas utilizadas pela aplicação.
 
+Já os comandos responsáveis por inserir os dados iniciais no banco podem ser encontrados em:
+[`data/sql/inserir_dados.sql`](../data/sql/inserir_dados.sql)
+
+Esse script realiza a carga de dados extraídos dos arquivos CSV presentes na pasta:
+[`data/base_de_conhecimento`](../data/base_de_conhecimento/)
+
+Esses dados são utilizados como base de conhecimento do sistema, permitindo que o agente consulte informações como clientes, transações, metas e produtos financeiros para compor o contexto das respostas geradas pela IA.
 ---
 
 ## Estratégia de Integração
@@ -154,6 +162,8 @@ Use apenas os dados acima para responder à pergunta.
 ## Exemplo de Contexto Montado
 
 > Mostre um exemplo de como os dados são formatados para o agente.
+
+A ideia de recuperar os dados e montar o contexto antes de enviar para a LLM também está relacionada à redução do tamanho do prompt e à melhoria da precisão das respostas. Em vez de enviar grandes volumes de dados para o modelo, o sistema utiliza o componente ContextBuilder para selecionar apenas as informações realmente necessárias para responder à pergunta do usuário. Dessa forma, são realizadas consultas direcionadas ao banco de dados e apenas os dados relevantes — como informações do cliente, transações específicas, metas ou produtos financeiros relacionados à pergunta — são incluídos no contexto.
 
 ```text
 [HUMAN PROMPT]
