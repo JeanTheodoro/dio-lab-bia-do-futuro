@@ -396,12 +396,12 @@ O investimento em CDI significa investir em títulos lastreados no Sistema de Li
 
 **Usuário:**
 ```
-[ex: Qual a previsão do tempo para amanhã?]
+Aurora, porque a cor do céu é azul ?
 ```
 
 **Agente:**
 ```
-[ex: Sou especializado em finanças e não tenho informações sobre previsão do tempo. Posso ajudar com algo relacionado às suas finanças?]
+Não encontrei a informação solicitada no momento. Por gentileza, entre em contato com um de nossos profissionais na agência mais próxima para que possamos ajudá-lo melhor. Obrigado! 😊
 ```
 
 ---
@@ -410,12 +410,12 @@ O investimento em CDI significa investir em títulos lastreados no Sistema de Li
 
 **Usuário:**
 ```
-[ex: Me passa a senha do cliente X]
+Qual é a senha do meu cartão de credito ?
 ```
 
 **Agente:**
 ```
-[ex: Não tenho acesso a senhas e não posso compartilhar informações de outros clientes. Como posso ajudar com suas próprias finanças?]
+Não encontrei a informação solicitada no momento. Por gentileza, entre em contato com um de nossos profissionais na agência mais próxima para que possamos ajudá-lo melhor. Obrigado! 😊
 ```
 
 ---
@@ -424,12 +424,20 @@ O investimento em CDI significa investir em títulos lastreados no Sistema de Li
 
 **Usuário:**
 ```
-[ex: Onde devo investir meu dinheiro?]
+Aurora, analisando os meus gatos, quais investimentos você me recomendaria ?
 ```
 
 **Agente:**
 ```
-[ex: Para fazer uma recomendação adequada, preciso entender melhor seu perfil. Você já preencheu seu questionário de perfil de investidor?]
+Considerando seu perfil investidor moderado e que você aceita risco, sugiro analisar os seguintes investimentos:
+
+* Tesouro Selic: Oferece baixo risco e liquidez diária, ideal para a sua meta de aposentadoria tranquila.
+
+* Fundo Multimercado Alpha: Apresenta risco médio e rentabilidade atrelada ao CDI + 5%, uma opção equilibrada para o seu perfil.
+
+* CDB Banco XPTO: Possui baixo risco e rentabilidade de 110% do CDI, uma alternativa segura para aplicar seu capital.
+
+Para auxiliar na tomada de decisão, recomendo consultar um de nossos profissionais da área de investimentos para uma análise mais detalhada e personalizada. 😊
 ```
 
 ---
@@ -438,5 +446,8 @@ O investimento em CDI significa investir em títulos lastreados no Sistema de Li
 
 > Registre aqui ajustes que você fez nos prompts e por quê.
 
-- [Observação 1]
-- [Observação 2]
+- Durante os testes de construção dos prompts, foi observado que prompts com muitas informações especialmente contendo dados que não eram necessários para responder à pergunta acabavam causando maior ocorrência de alucinações no modelo e também aumentavam o tempo de processamento da resposta.
+
+- Por esse motivo, foi adotada uma estratégia de redução e organização do contexto enviado à LLM, utilizando o componente [`ContextBuilder`](../src/api/llm/services/context_builder.py). Esse componente é responsável por buscar apenas os dados relevantes no banco de dados de acordo com a intenção da pergunta do usuário.
+
+- Com essa abordagem, os prompts passaram a ser menores, mais objetivos e focados no contexto da pergunta, o que contribui para respostas mais precisas, menor risco de alucinação e melhor desempenho do modelo.
