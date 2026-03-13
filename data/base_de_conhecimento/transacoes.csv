@@ -1,0 +1,146 @@
+"id","conta_corrente_id","descricao","categoria","valor","tipo_operacao","created_at"
+311,1,Salário mensal Janeiro,salario,12000.00,credito,2026-01-05 00:00:00.000
+312,1,Projeto freelance engenharia,renda_extra,2500.00,credito,2026-01-10 00:00:00.000
+313,1,Aluguel apartamento,aluguel,3200.00,debito,2026-01-08 00:00:00.000
+314,1,Supermercado mensal,supermercado,950.00,debito,2026-01-12 00:00:00.000
+315,1,Combustível carro,combustivel,620.00,debito,2026-01-15 00:00:00.000
+316,1,Farmácia,farmacia,180.00,debito,2026-01-18 00:00:00.000
+317,1,Conta de luz,conta_luz,210.00,debito,2026-01-20 00:00:00.000
+318,1,Conta de água,conta_agua,120.00,debito,2026-01-21 00:00:00.000
+319,1,Restaurante fim de semana,lazer,420.00,debito,2026-01-25 00:00:00.000
+320,1,Pagamento IPTU,iptu,850.00,debito,2026-03-10 00:00:00.000
+321,1,Pagamento IPVA,ipva,1600.00,debito,2026-03-15 00:00:00.000
+322,1,Salário mensal Fevereiro,salario,12000.00,credito,2026-02-05 00:00:00.000
+323,1,Consultoria engenharia,renda_extra,1800.00,credito,2026-02-11 00:00:00.000
+324,1,Aluguel apartamento,aluguel,3200.00,debito,2026-02-08 00:00:00.000
+325,1,Supermercado mensal,supermercado,910.00,debito,2026-02-12 00:00:00.000
+326,1,Combustível carro,combustivel,600.00,debito,2026-02-15 00:00:00.000
+327,1,Farmácia,farmacia,140.00,debito,2026-02-17 00:00:00.000
+328,1,Conta de luz,conta_luz,205.00,debito,2026-02-19 00:00:00.000
+329,1,Conta de água,conta_agua,115.00,debito,2026-02-20 00:00:00.000
+330,1,Cinema e jantar,lazer,380.00,debito,2026-02-24 00:00:00.000
+331,1,Salário mensal Março,salario,12000.00,credito,2026-03-05 00:00:00.000
+332,1,Projeto estrutural,renda_extra,2100.00,credito,2026-03-10 00:00:00.000
+333,1,Aluguel apartamento,aluguel,3200.00,debito,2026-03-08 00:00:00.000
+334,1,Supermercado mensal,supermercado,930.00,debito,2026-03-12 00:00:00.000
+335,1,Combustível carro,combustivel,610.00,debito,2026-03-15 00:00:00.000
+336,1,Farmácia,farmacia,150.00,debito,2026-03-18 00:00:00.000
+337,1,Conta de luz,conta_luz,220.00,debito,2026-03-20 00:00:00.000
+338,1,Conta de água,conta_agua,118.00,debito,2026-03-22 00:00:00.000
+339,1,Viagem curta,lazer,650.00,debito,2026-03-27 00:00:00.000
+340,2,Salário mensal Janeiro,salario,6500.00,credito,2026-01-05 00:00:00.000
+341,2,Freelance redes sociais,renda_extra,900.00,credito,2026-01-12 00:00:00.000
+342,2,Aluguel apartamento,aluguel,1800.00,debito,2026-01-08 00:00:00.000
+343,2,Supermercado mensal,supermercado,520.00,debito,2026-01-10 00:00:00.000
+344,2,Combustível,combustivel,250.00,debito,2026-01-14 00:00:00.000
+345,2,Farmácia,farmacia,90.00,debito,2026-01-16 00:00:00.000
+346,2,Conta de luz,conta_luz,130.00,debito,2026-01-18 00:00:00.000
+347,2,Conta de água,conta_agua,75.00,debito,2026-01-19 00:00:00.000
+348,2,Cinema e bar,lazer,260.00,debito,2026-01-23 00:00:00.000
+349,2,Pagamento IPTU,iptu,600.00,debito,2026-03-07 00:00:00.000
+350,2,Pagamento IPVA,ipva,950.00,debito,2026-03-09 00:00:00.000
+351,2,Salário mensal Fevereiro,salario,6500.00,credito,2026-02-05 00:00:00.000
+352,2,Freelance marketing digital,renda_extra,750.00,credito,2026-02-11 00:00:00.000
+353,2,Aluguel apartamento,aluguel,1800.00,debito,2026-02-08 00:00:00.000
+354,2,Supermercado mensal,supermercado,500.00,debito,2026-02-10 00:00:00.000
+355,2,Combustível,combustivel,240.00,debito,2026-02-14 00:00:00.000
+356,2,Farmácia,farmacia,110.00,debito,2026-02-16 00:00:00.000
+357,2,Conta de luz,conta_luz,125.00,debito,2026-02-18 00:00:00.000
+358,2,Conta de água,conta_agua,70.00,debito,2026-02-19 00:00:00.000
+359,2,Passeio shopping,lazer,220.00,debito,2026-02-23 00:00:00.000
+360,2,Salário mensal Março,salario,6500.00,credito,2026-03-05 00:00:00.000
+361,2,Gestão redes sociais,renda_extra,820.00,credito,2026-03-11 00:00:00.000
+362,2,Aluguel apartamento,aluguel,1800.00,debito,2026-03-08 00:00:00.000
+363,2,Supermercado mensal,supermercado,540.00,debito,2026-03-10 00:00:00.000
+364,2,Combustível,combustivel,260.00,debito,2026-03-14 00:00:00.000
+365,2,Farmácia,farmacia,95.00,debito,2026-03-16 00:00:00.000
+366,2,Conta de luz,conta_luz,135.00,debito,2026-03-18 00:00:00.000
+367,2,Conta de água,conta_agua,78.00,debito,2026-03-19 00:00:00.000
+368,2,Happy hour,lazer,240.00,debito,2026-03-26 00:00:00.000
+369,3,Pró-labore empresa,salario,25000.00,credito,2026-01-05 00:00:00.000
+370,3,Dividendos empresa,renda_extra,8000.00,credito,2026-01-12 00:00:00.000
+371,3,Aluguel casa,aluguel,6500.00,debito,2026-01-08 00:00:00.000
+372,3,Supermercado premium,supermercado,1800.00,debito,2026-01-10 00:00:00.000
+373,3,Combustível SUV,combustivel,950.00,debito,2026-01-14 00:00:00.000
+374,3,Farmácia,farmacia,320.00,debito,2026-01-16 00:00:00.000
+375,3,Conta de luz,conta_luz,420.00,debito,2026-01-18 00:00:00.000
+376,3,Conta de água,conta_agua,210.00,debito,2026-01-19 00:00:00.000
+377,3,Restaurante e lazer,lazer,1200.00,debito,2026-01-23 00:00:00.000
+378,3,Pagamento IPTU,iptu,2100.00,debito,2026-03-07 00:00:00.000
+379,3,Pagamento IPVA,ipva,4200.00,debito,2026-03-09 00:00:00.000
+380,3,Pró-labore empresa,salario,25000.00,credito,2026-02-05 00:00:00.000
+381,3,Dividendos empresa,renda_extra,7000.00,credito,2026-02-11 00:00:00.000
+382,3,Aluguel casa,aluguel,6500.00,debito,2026-02-08 00:00:00.000
+383,3,Supermercado premium,supermercado,1700.00,debito,2026-02-10 00:00:00.000
+384,3,Combustível SUV,combustivel,910.00,debito,2026-02-14 00:00:00.000
+385,3,Farmácia,farmacia,280.00,debito,2026-02-16 00:00:00.000
+386,3,Conta de luz,conta_luz,410.00,debito,2026-02-18 00:00:00.000
+387,3,Conta de água,conta_agua,205.00,debito,2026-02-19 00:00:00.000
+388,3,Viagem fim semana,lazer,2400.00,debito,2026-02-25 00:00:00.000
+389,3,Pró-labore empresa,salario,25000.00,credito,2026-03-05 00:00:00.000
+390,3,Dividendos empresa,renda_extra,7500.00,credito,2026-03-11 00:00:00.000
+391,3,Aluguel casa,aluguel,6500.00,debito,2026-03-08 00:00:00.000
+392,3,Supermercado premium,supermercado,1750.00,debito,2026-03-10 00:00:00.000
+393,3,Combustível SUV,combustivel,920.00,debito,2026-03-14 00:00:00.000
+394,3,Farmácia,farmacia,310.00,debito,2026-03-16 00:00:00.000
+395,3,Conta de luz,conta_luz,430.00,debito,2026-03-18 00:00:00.000
+396,3,Conta de água,conta_agua,215.00,debito,2026-03-19 00:00:00.000
+397,3,Clube e lazer,lazer,1500.00,debito,2026-03-27 00:00:00.000
+398,4,Salário mensal,salario,9000.00,credito,2026-01-05 00:00:00.000
+399,4,Freelance desenvolvimento,renda_extra,2200.00,credito,2026-01-12 00:00:00.000
+400,4,Aluguel apartamento,aluguel,2400.00,debito,2026-01-08 00:00:00.000
+401,4,Supermercado,supermercado,700.00,debito,2026-01-10 00:00:00.000
+402,4,Combustível,combustivel,380.00,debito,2026-01-14 00:00:00.000
+403,4,Farmácia,farmacia,130.00,debito,2026-01-16 00:00:00.000
+404,4,Conta de luz,conta_luz,180.00,debito,2026-01-18 00:00:00.000
+405,4,Conta de água,conta_agua,90.00,debito,2026-01-19 00:00:00.000
+406,4,Streaming e lazer,lazer,300.00,debito,2026-01-23 00:00:00.000
+407,4,Pagamento IPTU,iptu,750.00,debito,2026-01-07 00:00:00.000
+408,4,Pagamento IPVA,ipva,1400.00,debito,2026-01-09 00:00:00.000
+409,4,Salário mensal,salario,9000.00,credito,2026-02-05 00:00:00.000
+410,4,Freelance desenvolvimento,renda_extra,1800.00,credito,2026-02-12 00:00:00.000
+411,4,Aluguel apartamento,aluguel,2400.00,debito,2026-02-08 00:00:00.000
+412,4,Supermercado,supermercado,690.00,debito,2026-02-10 00:00:00.000
+413,4,Combustível,combustivel,350.00,debito,2026-02-14 00:00:00.000
+414,4,Farmácia,farmacia,120.00,debito,2026-02-16 00:00:00.000
+415,4,Conta de luz,conta_luz,175.00,debito,2026-02-18 00:00:00.000
+416,4,Conta de água,conta_agua,85.00,debito,2026-02-19 00:00:00.000
+417,4,Cinema,lazer,260.00,debito,2026-02-24 00:00:00.000
+418,4,Salário mensal,salario,9000.00,credito,2026-03-05 00:00:00.000
+419,4,Freelance desenvolvimento,renda_extra,2000.00,credito,2026-03-11 00:00:00.000
+420,4,Aluguel apartamento,aluguel,2400.00,debito,2026-03-08 00:00:00.000
+421,4,Supermercado,supermercado,710.00,debito,2026-03-10 00:00:00.000
+422,4,Combustível,combustivel,370.00,debito,2026-03-14 00:00:00.000
+423,4,Farmácia,farmacia,110.00,debito,2026-03-16 00:00:00.000
+424,4,Conta de luz,conta_luz,190.00,debito,2026-03-18 00:00:00.000
+425,4,Conta de água,conta_agua,88.00,debito,2026-03-19 00:00:00.000
+426,4,Bar com amigos,lazer,320.00,debito,2026-03-26 00:00:00.000
+427,5,Salário mensal,salario,7000.00,credito,2026-01-05 00:00:00.000
+428,5,Aulas particulares,renda_extra,1200.00,credito,2026-01-12 00:00:00.000
+429,5,Aluguel,aluguel,2000.00,debito,2026-01-08 00:00:00.000
+430,5,Supermercado,supermercado,620.00,debito,2026-01-10 00:00:00.000
+431,5,Combustível,combustivel,280.00,debito,2026-01-14 00:00:00.000
+432,5,Farmácia,farmacia,150.00,debito,2026-01-16 00:00:00.000
+433,5,Conta de luz,conta_luz,160.00,debito,2026-01-18 00:00:00.000
+434,5,Conta de água,conta_agua,80.00,debito,2026-01-19 00:00:00.000
+435,5,Passeio e lazer,lazer,210.00,debito,2026-01-22 00:00:00.000
+436,5,Pagamento IPTU,iptu,620.00,debito,2026-01-07 00:00:00.000
+437,5,Pagamento IPVA,ipva,980.00,debito,2026-01-09 00:00:00.000
+438,5,Salário mensal,salario,7000.00,credito,2026-02-05 00:00:00.000
+439,5,Aulas particulares,renda_extra,1100.00,credito,2026-02-11 00:00:00.000
+440,5,Aluguel,aluguel,2000.00,debito,2026-02-08 00:00:00.000
+441,5,Supermercado,supermercado,610.00,debito,2026-02-10 00:00:00.000
+442,5,Combustível,combustivel,260.00,debito,2026-02-14 00:00:00.000
+443,5,Farmácia,farmacia,170.00,debito,2026-02-16 00:00:00.000
+444,5,Conta de luz,conta_luz,150.00,debito,2026-02-18 00:00:00.000
+445,5,Conta de água,conta_agua,82.00,debito,2026-02-19 00:00:00.000
+446,5,Cinema,lazer,190.00,debito,2026-02-23 00:00:00.000
+447,5,Salário mensal,salario,7000.00,credito,2026-03-05 00:00:00.000
+448,5,Aulas particulares,renda_extra,1300.00,credito,2026-03-11 00:00:00.000
+449,5,Aluguel,aluguel,2000.00,debito,2026-03-08 00:00:00.000
+450,5,Supermercado,supermercado,640.00,debito,2026-03-10 00:00:00.000
+451,5,Combustível,combustivel,270.00,debito,2026-03-14 00:00:00.000
+452,5,Farmácia,farmacia,160.00,debito,2026-03-16 00:00:00.000
+453,5,Conta de luz,conta_luz,165.00,debito,2026-03-18 00:00:00.000
+454,5,Conta de água,conta_agua,85.00,debito,2026-03-19 00:00:00.000
+455,5,Teatro,lazer,230.00,debito,2026-03-25 00:00:00.000

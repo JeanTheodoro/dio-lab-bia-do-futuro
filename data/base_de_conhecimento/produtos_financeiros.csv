@@ -1,0 +1,21 @@
+"id","nome","categoria","risco","rentabilidade_descricao","aporte_minimo","liquidez","prazo_minimo_dias","created_at"
+1,CDB Banco XPTO,Renda Fixa,baixo,"110% do CDI",1000.00,Diária,30,2026-03-11 22:16:31.414
+2,Tesouro Selic,Tesouro Direto,baixo,"Selic + 0,10%",100.00,D+1,1,2026-03-11 22:16:31.414
+3,Fundo Multimercado Alpha,Fundo,medio,CDI + 5%,5000.00,D+30,90,2026-03-11 22:16:31.414
+4,Ações Tech Brasil,Renda Variável,alto,Variável conforme mercado,2000.00,D+2,0,2026-03-11 22:16:31.414
+5,LCI Premium,Renda Fixa,baixo,"95% do CDI",5000.00,No vencimento,180,2026-03-11 22:16:31.414
+6,CDB Banco XPTO,Renda Fixa,baixo,"110% do CDI",1000.00,Diária,30,2026-03-11 22:16:31.414
+7,Tesouro Selic,Tesouro Direto,baixo,"Selic + 0,10%",100.00,D+1,1,2026-03-11 22:16:31.414
+8,Fundo Multimercado Alpha,Fundo,medio,CDI + 5%,5000.00,D+30,90,2026-03-11 22:16:31.414
+9,Ações Tech Brasil,Renda Variável,alto,Variável conforme mercado,2000.00,D+2,0,2026-03-11 22:16:31.414
+10,LCI Premium,Renda Fixa,baixo,"95% do CDI",5000.00,No vencimento,180,2026-03-11 22:16:31.414
+11,Tesouro IPCA+ 2035,Tesouro Direto,medio,"IPCA + 5,5%",100.00,D+1,30,2026-03-11 22:16:31.414
+12,ETF BOVA11,ETF,alto,Varia conforme Ibovespa,150.00,D+2,0,2026-03-11 22:16:31.414
+13,ETF IVVB11,ETF,alto,Varia conforme S&P 500,200.00,D+2,0,2026-03-11 22:16:31.414
+14,Fundo Imobiliário XPML11,FII,medio,Dividendos mensais + valorização,120.00,D+2,0,2026-03-11 22:16:31.414
+15,CDB Banco Digital 120%,Renda Fixa,baixo,"120% do CDI",1000.00,Diária,30,2026-03-11 22:16:31.414
+16,Debênture Incentivada Infra,Renda Fixa,medio,IPCA + 6%,5000.00,No vencimento,720,2026-03-11 22:16:31.414
+17,Fundo Previdência Balanceado,Previdência,medio,Carteira balanceada RF/RV,500.00,D+30,180,2026-03-11 22:16:31.414
+18,CRI Imobiliário High Grade,Renda Fixa,medio,IPCA + 7%,10000.00,No vencimento,1080,2026-03-11 22:16:31.414
+19,Ações Banco Brasil,Renda Variável,alto,Dividendos + valorização,500.00,D+2,0,2026-03-11 22:16:31.414
+20,Fundo Multimercado Macro,Fundo,medio,Estratégia macro global,3000.00,D+30,90,2026-03-11 22:16:31.414

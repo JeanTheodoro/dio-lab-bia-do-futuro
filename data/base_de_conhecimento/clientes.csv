@@ -1,0 +1,6 @@
+"id","nome","idade","profissao","renda_mensal","perfil_investidor","objetivo_principal","aceita_risco","created_at","updated_at"
+1,João Silva,35,Engenheiro,12000.00,moderado,Aposentadoria tranquila,true,2026-03-12 01:12:51.120,
+2,Maria Souza,28,Analista de Marketing,6500.00,conservador,Reserva de emergência,false,2026-03-12 01:12:51.120,
+3,Carlos Pereira,42,Empresário,25000.00,arrojado,Expansão patrimonial,true,2026-03-12 01:12:51.120,
+4,Ana Costa,31,Desenvolvedora,9000.00,moderado,Compra de imóvel,true,2026-03-12 01:12:51.120,
+5,Fernanda Lima,50,Professora,7000.00,conservador,Segurança financeira,false,2026-03-12 01:12:51.120,
