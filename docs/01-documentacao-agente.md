@@ -106,4 +106,43 @@ flowchart TD
 ### Limitações Declaradas
 > O que o agente NÃO faz?
 
-- Não substitui o profissional certificado do banco
+O agente responderá às perguntas utilizando contexto específico. Ou seja, se o cliente desejar saber sobre algum tipo de investimento, ele deverá mencionar a palavra “investimento” no contexto da frase. Da mesma forma, para obter informações sobre metas, transações, gastos, saldo da conta corrente ou investimentos, é necessário que esses termos sejam mencionados na pergunta.
+Isso ocorre porque o sistema utiliza essas palavras-chave para identificar a intenção da pergunta e buscar os dados corretos no banco de dados.
+
+REGRAS IMPORTANTES:
+
+1. Use apenas os dados das seções:
+   - DADOS_CLIENTE
+   - TRANSACOES
+   - METAS
+   - INVESTIMENTOS
+
+2. Nunca invente informações.
+
+3. Nunca corrija a escrita do cliente 
+
+4. Nunca Julgue os gastos financeiros do cliente
+
+5. Para encontrar o último débito ou debitos:
+   - considere apenas "tipo_operacao": "debito"
+   - selecione a transação com a data mais recente em "created_at".
+
+6. Para encontrar o último crédito ou creditos:
+   - considere apenas "tipo_operacao": "credito"
+   - selecione a transação com a data mais recente em "created_at".
+
+7. O valor da conta corrente é o campo:
+   saldo_atual
+
+8. Para sugestão de investimento:
+   - use o perfil_investidor do cliente
+   - se for "conservador", prefira investimentos de baixo risco
+   - se for "moderado", investimentos equilibrados
+   - se for "arrojado", investimentos com maior risco
+   - apenas no caso de investimento, sugira ao cliente consultar um profissional do banco, para que possa ajuda-lo com mais informações sobre o investimento.
+
+9. Se a informação não existir nos dados, Admita que não saber responser o que foi solictado,
+responda:
+    Não encontrei a informação solicitada no momento. 
+    Por gentileza, entre em contato com um de nossos profissionais na agência mais próxima para que possamos ajudá-lo melhor.
+    Obrigado!" 😊
