@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        // Configuração para forçar linhas pretas e estilo clean
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000', // Cor das setas/linhas
+                secondaryColor: '#f4f4f4',
+                tertiaryColor: '#ffffff',
+                fontFamily: 'arial'
+            }
+        });
+    </script>
+    <title>Aurora - Assistente Financeira com IA</title>
+    <style>
+      
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 900px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        img {
+            max-width: 100%;
+        }
+        blockquote {
+            border-left: 4px solid #2c3e50;
+            padding-left: 10px;
+            color: #555;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 30px 0;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌞 Aurora - Assistente Financeira com IA</h1>
+
+<h2>🚀 Visão Geral</h2>
+<p>Aurora é uma assistente financeira inteligente que utiliza modelos de linguagem (LLM) integrados a um banco de dados relacional para fornecer respostas personalizadas com base no contexto financeiro do cliente. A aplicação combina FastAPI, PostgreSQL, Ollama (LLM local) e Streamlit para criar um chatbot capaz de analisar transações, metas e perfil do usuário, entregando respostas seguras, contextualizadas e sem alucinação.</p>
+
+<h3>Arquitetura do projeto</h3>
+<img src="../assets/estrutura_do_projeto.png" alt="Arquitetura do assistente financeiro">
+
+<hr>
+
+<h2>1. 🗄️ Modelagem do Banco de Dados</h2>
+<p>A partir de uma base inicial em arquivos CSV e JSON: </p>
+
+<h3>Dado Fornecidos:</h3>
+
+<h4>historico_atendimento.csv</h4>
+<pre><code>data,canal,tema,resumo,resolvido
+2025-09-15,chat,CDB,Cliente perguntou sobre rentabilidade e prazos,sim
+2025-09-22,telefone,Problema no app,Erro ao visualizar extrato foi corrigido,sim
+2025-10-01,chat,Tesouro Selic,Cliente pediu explicação sobre o funcionamento do Tesouro Direto,sim
+2025-10-12,chat,Metas financeiras,Cliente acompanhou o progresso da reserva de emergência,sim
+2025-10-25,email,Atualização cadastral,Cliente atualizou e-mail e telefone,sim
+</code></pre>
+
+<h4>perfil_investidor.json</h4>
+<pre><code>{
+  "nome": "João Silva",
+  "idade": 32,
+  "profissao": "Analista de Sistemas",
+  "renda_mensal": 5000.00,
+  "perfil_investidor": "moderado",
+  "objetivo_principal": "Construir reserva de emergência",
+  "patrimonio_total": 15000.00,
+  "reserva_emergencia_atual": 10000.00,
+  "aceita_risco": false,
+  "metas": [
+    {
+      "meta": "Completar reserva de emergência",
+      "valor_necessario": 15000.00,
+      "prazo": "2026-06"
+    },
+    {
+      "meta": "Entrada do apartamento",
+      "valor_necessario": 50000.00,
+      "prazo": "2027-12"
+    }
+  ]
+}
+</code></pre>
+
+<h4>produtos_financeiros.json</h4>
+<pre><code>[
+  {
+    "nome": "Tesouro Selic",
+    "categoria": "renda_fixa",
+    "risco": "baixo",
+    "rentabilidade": "100% da Selic",
+    "aporte_minimo": 30.00,
+    "indicado_para": "Reserva de emergência e iniciantes"
+  },
+  {
+    "nome": "CDB Liquidez Diária",
+    "categoria": "renda_fixa",
+    "risco": "baixo",
+    "rentabilidade": "102% do CDI",
+    "aporte_minimo": 100.00,
+    "indicado_para": "Quem busca segurança com rendimento diário"
+  },
+  {
+    "nome": "LCI/LCA",
+    "categoria": "renda_fixa",
+    "risco": "baixo",
+    "rentabilidade": "95% do CDI",
+    "aporte_minimo": 1000.00,
+    "indicado_para": "Quem pode esperar 90 dias (isento de IR)"
+  },
+  {
+    "nome": "Fundo Imobiliarios (FII)",
+    "categoria": "fundo",
+    "risco": "medio",
+    "rentabilidade": "Dividend yield (DY) costuma ficar entre 6% a 12% ao ano",
+    "aporte_minimo": 100.00,
+    "indicado_para": "Perfil moderado que busca diversificação e recorrencia mmensal"
+  },
+  {
+    "nome": "Fundo de Ações",
+    "categoria": "fundo",
+    "risco": "alto",
+    "rentabilidade": "Variável",
+    "aporte_minimo": 100.00,
+    "indicado_para": "Perfil arrojado com foco no longo prazo"
+  }
+]
+</code></pre>
+
+<h4>transacoes.csv</h4>
+<pre><code>data,descricao,categoria,valor,tipo
+2025-10-01,Salário,receita,5000.00,entrada
+2025-10-02,Aluguel,moradia,1200.00,saida
+2025-10-03,Supermercado,alimentacao,450.00,saida
+2025-10-05,Netflix,lazer,55.90,saida
+2025-10-07,Farmácia,saude,89.00,saida
+2025-10-10,Restaurante,alimentacao,120.00,saida
+2025-10-12,Uber,transporte,45.00,saida
+2025-10-15,Conta de Luz,moradia,180.00,saida
+2025-10-20,Academia,saude,99.00,saida
+2025-10-25,Combustível,transporte,250.00,saida
+</code></pre>
+
+
+<p>Foi realizada a <strong>modelagem de um banco relacional</strong> para permitir:</p>
+<ul>
+    <li>Relacionamento entre dados</li>
+    <li>Consultas eficientes</li>
+    <li>Escalabilidade</li>
+    <li>Automação e consistência de dados via triggers</li>
+</ul>
+
+<h3>📌 Importância das Triggers</h3>
+<p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira:</p>
+
+<h4>Atualização automática de saldo</h4>
+<p>Toda vez que uma transação é inserida na tabela <code>transacoes</code>, a trigger <code>trg_atualiza_saldo</code> executa a função <code>fn_atualiza_saldo</code> que:</p>
+<ul>
+    <li>Incrementa o saldo da conta em caso de crédito</li>
+    <li>Decrementa o saldo em caso de débito</li>
+    <li>Valida se o saldo + limite da conta é suficiente, evitando débitos indevidos</li>
+</ul>
+
+<pre><code>CREATE OR REPLACE FUNCTION dio_bank.fn_atualiza_saldo()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    saldo_atual_conta NUMERIC;
+    limite_conta_valor NUMERIC;
+BEGIN
+    SELECT saldo_atual, limite_conta
+    INTO saldo_atual_conta, limite_conta_valor
+    FROM dio_bank.contas_correntes
+    WHERE id = NEW.conta_corrente_id;
+
+    IF NEW.tipo_operacao = 'credito' THEN
+        UPDATE dio_bank.contas_correntes
+        SET saldo_atual = saldo_atual + NEW.valor
+        WHERE id = NEW.conta_corrente_id;
+
+    ELSIF NEW.tipo_operacao = 'debito' THEN
+        IF saldo_atual_conta + limite_conta_valor < NEW.valor THEN
+            RAISE EXCEPTION 'Saldo insuficiente para realizar o débito';
+        END IF;
+
+        UPDATE dio_bank.contas_correntes
+        SET saldo_atual = saldo_atual - NEW.valor
+        WHERE id = NEW.conta_corrente_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_atualiza_saldo
+AFTER INSERT ON dio_bank.transacoes
+FOR EACH ROW
+EXECUTE FUNCTION dio_bank.fn_atualiza_saldo();
+</code></pre>
+
+<h4>Criação automática de conta corrente</h4>
+<p>Quando um novo cliente é inserido na tabela <code>clientes</code>, a trigger <code>trg_criar_conta_corrente</code> cria automaticamente uma conta corrente associada, garantindo que todo cliente tenha sua conta pronta para transações.</p>
+
+<pre><code>CREATE OR REPLACE FUNCTION dio_bank.criar_conta_corrente()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO dio_bank.contas_correntes(cliente_id)
+    VALUES (NEW.id);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_criar_conta_corrente
+AFTER INSERT ON dio_bank.clientes
+FOR EACH ROW
+EXECUTE FUNCTION dio_bank.criar_conta_corrente();
+</code></pre>
+
+
+<blockquote>✅ Com isso, asseguramos integridade, evitamos inconsistências manuais e reduzimos a complexidade da lógica na camada da aplicação.</blockquote>
+
+<h3>📊 Entidades principais</h3>
+<ul>
+    <li><strong>Clientes</strong> → dados do usuário</li>
+    <li><strong>Contas Correntes</strong> → saldo</li>
+    <li><strong>Transações</strong> → histórico financeiro</li>
+    <li><strong>Produtos Financeiros</strong> → investimentos disponíveis</li>
+    <li><strong>Metas</strong> → objetivos do cliente</li>
+    <li><strong>Contas de Investimento</strong> → carteira do cliente</li>
+    <li><strong>Histórico de Atendimento</strong> → interações passadas</li>
+</ul>
+
+<p>Essa modelagem permite análises como:</p>
+<ul>
+    <li>Último débito/crédito</li>
+    <li>Padrão de gastos</li>
+    <li>Sugestões de investimento</li>
+</ul>
+
+
+<h4> 💾 Diagrama modelo-relacional do banco de dados</h3>
+<div class="mermaid">
+erDiagram
+    CLIENTES {
+        BIGSERIAL id PK
+        VARCHAR nome
+        INT idade
+        VARCHAR profissao
+        NUMERIC renda_mensal
+        VARCHAR perfil_investidor
+        VARCHAR objetivo_principal
+        BOOLEAN aceita_risco
+        TIMESTAMP created_at
+    }
+
+    CONTAS_CORRENTES {
+        BIGSERIAL id PK
+        BIGINT cliente_id FK
+        INTEGER cod_conta_corrente
+        NUMERIC saldo_atual
+        NUMERIC limite_conta
+    }
+
+    TRANSACOES {
+        BIGSERIAL id PK
+        BIGINT conta_corrente_id FK
+        VARCHAR descricao
+        VARCHAR categoria
+        NUMERIC valor
+        VARCHAR tipo_operacao
+        TIMESTAMP created_at
+    }
+
+    PRODUTOS_FINANCEIROS {
+        BIGSERIAL id PK
+        VARCHAR nome
+        VARCHAR categoria
+        VARCHAR risco
+        NUMERIC aporte_minimo
+        VARCHAR liquidez
+    }
+
+    CONTAS_INVESTIMENTO {
+        BIGSERIAL id PK
+        BIGINT cliente_id FK
+        BIGINT produto_financeiro_id FK
+        NUMERIC saldo
+    }
+
+    METAS {
+        BIGSERIAL id PK
+        BIGINT cliente_id FK
+        VARCHAR objetivo
+        NUMERIC valor_necessario
+        DATE prazo
+    }
+
+    HISTORICO_ATENDIMENTOS {
+        BIGSERIAL id PK
+        BIGINT cliente_id FK
+        DATE data
+        VARCHAR canal
+        VARCHAR tema
+        TEXT resumo
+        BOOLEAN resolvido
+    }
+
+    CLIENTES ||--o{ CONTAS_CORRENTES : possui
+    CONTAS_CORRENTES ||--o{ TRANSACOES : registra
+    CLIENTES ||--o{ CONTAS_INVESTIMENTO : possui
+    PRODUTOS_FINANCEIROS ||--o{ CONTAS_INVESTIMENTO : investimento
+    CLIENTES ||--o{ METAS : define
+    CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
+  </div>
+
+<hr>
+
+<h2>2. ⚙️ API com FastAPI</h2>
+
+<p>A aplicação possui uma API responsável por:</p>
+<ul>
+    <li>Orquestrar a lógica de negócio</li>
+    <li>Consultar o banco de dados</li>
+    <li>Integrar com a LLM</li>
+</ul>
+
+<h3>📁 Estrutura do Projeto</h3>
+<pre><code>├── api
+│   ├── core → configuração e base do sistema
+│   ├── llm → integração com IA
+│   │   ├── factory → criação do provider
+│   │   ├── prompt → templates de prompt
+│   │   ├── provider → integração com Ollama
+│   │   ├── services → regras da IA
+│   │   │   ├── bank_assistente.py
+│   │   │   ├── context_builder.py
+│   │   │   └── intent_classifier.py
+│   │
+│   ├── models → modelos do banco
+│   ├── repository → acesso a dados
+│   ├── router → endpoints
+│   ├── schemas → validação (Pydantic)
+│   └── service → regras de negócio
+</code></pre>
+
+<h3>🔗 Endpoint principal</h3>
+<pre><code>POST /api/v1/ask_assistent_ia
+</code></pre>
+
+<p>Responsável por receber a pergunta do usuário e retornar a resposta da IA.</p>
+
+<h2>3. 🤖 LLM com Ollama</h2>
+
+<p>A Aurora utiliza o modelo <strong>gemma3 via Ollama</strong>, permitindo execução local.</p>
+
+<h3>🔧 Componentes</h3>
+<ul>
+    <li><code>LLMFactory</code> → define qual provider usar</li>
+    <li><code>OllamaProvider</code> → integração com modelo local</li>
+    <li><code>BankAssistant</code> → orquestra a resposta</li>
+</ul>
+
+<h3>🧠 Funcionamento</h3>
+<ul>
+    <li>Recebe pergunta</li>
+    <li>Injeta contexto no prompt</li>
+    <li>Envia para LLM</li>
+    <li>Retorna resposta</li>
+</ul>
+
+<hr>
+
+<h2>4. 💻 Streamlit (Interface)</h2>
+
+<p>O Streamlit é responsável por:</p>
+<ul>
+    <li>Interface do usuário</li>
+    <li>Envio de perguntas para API</li>
+    <li>Exibição das respostas</li>
+    <li>Permite que a pergunta seja feita via <strong>texto ou áudio</strong></li>
+</ul>
+
+<h3>🔄 Fluxo</h3>
+<ol>
+    <li>Usuário digita pergunta ou grava áudio</li>
+    <li>Streamlit chama API</li>
+    <li>API processa</li>
+    <li>Retorna resposta</li>
+    <li>UI exibe resposta</li>
+</ol>
+
+<hr>
+
+<h2>5. 💬 Funcionamento do Chatbot</h2>
+
+<h3>🔄 Fluxo completo</h3>
+<ol>
+    <li>Usuário envia pergunta</li>
+    <li>API recebe requisição</li>
+    <li><code>intent_classifier</code> identifica intenção</li>
+    <li><code>ContextBuilder</code> busca dados no banco</li>
+    <li>Contexto é montado</li>
+    <li>Prompt é gerado</li>
+    <li>LLM processa</li>
+    <li>Resposta retorna ao usuário</li>
+</ol>
+
+<h4>🧩 Diagrama De Sequência</h4>
+<div class="mermaid">
+    sequenceDiagram
+        autonumber
+        participant UI as Streamlit UI
+        participant API as FastAPI Router
+        participant Factory as LLMFactory
+        participant Assistant as BankAssistant
+        participant Intent as IntentClassifier
+        participant Context as ContextBuilder
+        participant Service as AssistanteIaService
+        participant LLM as Provider LLM
+        participant DB as Database
+
+        UI->>API: POST /api/v1/ask_assistent_ia (question, cod_conta)
+
+        API->>Factory: create()
+        Factory-->>API: provider
+
+        API->>Assistant: instanciar(provider)
+        API->>Assistant: ask(question, cod_conta, session_db)
+
+        Assistant->>Intent: detectar_intencao(question)
+        Intent-->>Assistant: tipo
+
+        Assistant->>Context: build(tipo, cod_conta, session_db)
+
+        Context->>Service: buscar_resumo(cod_conta)
+        Service->>DB: SELECT cliente
+        DB-->>Service: dados cliente
+        Service-->>Context: cliente
+
+        alt tipo contém "transacao"
+            Context->>Service: busca_transacoes(cod_conta)
+            Service->>DB: SELECT transacoes
+            DB-->>Service: dados
+            Service-->>Context: transacoes
+        end
+
+        alt tipo contém "investimento"
+            Context->>Service: busca_metas(cod_conta)
+            Service->>DB: SELECT metas
+            DB-->>Service: dados
+            Service-->>Context: metas
+
+            Context->>Service: busca_investimentos(perfil)
+            Service->>DB: SELECT investimentos
+            DB-->>Service: dados
+            Service-->>Context: investimentos
+
+            Context->>Service: busca_transacoes(cod_conta)
+            Service->>DB: SELECT transacoes
+            DB-->>Service: dados
+            Service-->>Context: transacoes
+        end
+
+        alt tipo contém "meta"
+            Context->>Service: busca_metas(cod_conta)
+            Service->>DB: SELECT metas
+            DB-->>Service: dados
+            Service-->>Context: metas
+        end
+
+        Context-->>Assistant: contexto serializado
+
+        Assistant->>Assistant: montar HUMAN_PROMPT
+        Assistant->>Assistant: criar mensagens (System + Human)
+
+        Assistant->>LLM: ainvoke(messages)
+        LLM-->>Assistant: resposta
+
+        Assistant-->>API: resposta_texto
+        API-->>UI: JSON { answer }
+    </div>
+
+<h3>💡 Exemplo de Perguntas</h3>
+<ul>
+    <li>Qual meu saldo atual?</li>
+    <li>Qual foi meu último gasto?</li>
+    <li>Quanto gastei com supermercado?</li>
+    <li>Tenho metas cadastradas?</li>
+    <li>Qual investimento combina comigo?</li>
+</ul>
+
+
+<hr>
+
+<h3>🧾 Exemplo de Resposta</h3>
+<p>"Seu saldo atual é de 68466.0. Seu último gasto foi com supermercado no valor de 930.0."</p>
+
+<h2>🎬 Exibição do funcionamento da aplicação</h2>
+<img src="../assets/demostraca-da_aplicacao_aurora.gif" alt="Exibição do funcionamento do projeto">
+
+<hr>
+
+<h2>🎯 Conclusão</h2>
+
+<p>A Aurora combina diversos conceitos essenciais de tecnologia para criar uma solução completa e escalável no setor financeiro.</p>
+
+<p>A aplicação integra:</p>
+<ul>
+    <li><strong>Banco de dados relacional</strong> 🗄️ para garantir consistência, integridade e automação de processos financeiros;</li>
+    <li><strong>Backend estruturado com FastAPI</strong> ⚙️ para orquestrar lógica de negócio, gerenciar endpoints e fornecer dados para a interface;</li>
+    <li><strong>Tecnologias de IA</strong> 🤖, incluindo o modelo local <strong>Ollama</strong>, para processar linguagem natural e fornecer respostas inteligentes e contextualizadas;</li>
+    <li><strong>LangChain</strong> para gerenciamento de contexto e fluxo de conversação;</li>
+    <li><strong>Consumo da API OpenAI</strong> para recursos de <strong>STT (Speech-to-Text)</strong>, permitindo que usuários façam perguntas via áudio ou texto;</li>
+    <li><strong>Interface interativa com Streamlit</strong> 💻 para exibir informações, gráficos e permitir interação amigável com o usuário;</li>
+    <li><strong>Docker e Docker Compose</strong> 🐳 para empacotar a aplicação, simplificar deploys e garantir consistência do ambiente de desenvolvimento e produção.</li>
+</ul>
+
+<p>✅ Com essa arquitetura, a Aurora entrega uma solução moderna, segura e escalável, combinando inteligência artificial, dados estruturados, boas práticas de desenvolvimento e tecnologias de containerização.</p>
+
+</body>
+</html>
