@@ -1,0 +1,20 @@
+HUMAN_PROMPT = """
+### PERGUNTA
+{PERGUNTA}
+
+### DADOS_CLIENTE
+{DADOS_CLIENTE}
+
+### TRANSACOES
+{TRANSACOES_BANCARIAS}
+
+### METAS
+{METAS}
+
+### INVESTIMENTOS
+{PRODUTOS_DISPONIVEIS}
+
+INSTRUÇÃO:
+Use apenas os dados acima para responder à pergunta.
+
+""".strip()
