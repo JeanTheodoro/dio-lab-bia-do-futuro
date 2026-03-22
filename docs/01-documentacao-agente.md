@@ -62,36 +62,19 @@ E --> F[BankAssistant]
 C --> G[assistant.ask]
 
 G --> H[detectar_intencao]
-H --> I[Tipos: transacao / investimento / meta]
+H --> I[Tipos transacao investimento meta]
 
 G --> J[ContextBuilder.build]
 
 J --> K[Buscar cliente]
 K --> L[AssistanteIaService.buscar_resumo]
 
-J --> M{Tipo contém?}
+J --> M{Tipo contem?}
 
-M -->|transacao| N[Buscar transações]
+M -->|transacao| N[Buscar transacoes]
 N --> O[busca_transacoes]
 
-M -->|investimento| P[Buscar metas + investimentos + transações]
-P --> Q[busca_metas]
-P --> R[busca_investimentos]
-P --> S[busca_transacoes]
-
-M -->|meta| T[Buscar metas]
-T --> U[busca_metas]
-
-J --> V[Serialize para JSON]
-
-V --> W[Monta HUMAN_PROMPT]
-W --> X[Cria mensagens (System + Human)]
-
-X --> Y[provider.ainvoke]
-Y --> Z[Resposta da IA]
-
-Z --> AA[Return JSON {answer}]
-AA --> A
+M -->|investimento| P[Buscar metas investimentos transacoes]
 ```
 
 ### Componentes
