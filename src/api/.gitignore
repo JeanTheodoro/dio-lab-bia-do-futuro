@@ -1,0 +1,50 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambiente virtual
+.env
+.venv
+venv/
+ENV/
+env/
+
+# Variáveis de ambiente
+.env.*
+*.env
+
+# Logs
+*.log
+
+# SQLite
+*.sqlite3
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs e editores
+.vscode/
+.idea/
+
+# Testes / cobertura
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Build / distribuição
+build/
+dist/
+*.egg-info/
+
+# MyPy / lint
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# Docker
+*.pid
+
+# FastAPI / Uvicorn
+*.reload
