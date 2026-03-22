@@ -66,7 +66,7 @@ Desenvolva um **protótipo funcional** do seu agente:
 - Integração com LLM (via API ou modelo local)
 - Conexão com a base de conhecimento
 
-📁 **Pasta:** [`src/`](./src/)
+📁 **Pasta:** [`src/`](./src/README.md)
 
 ---
 
