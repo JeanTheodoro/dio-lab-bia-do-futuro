@@ -84,6 +84,8 @@ services:
       context: ./streamlit
       dockerfile: Dockerfile
     container_name: dio_streamlit
+    env_file:
+      - .env
     restart: always
     volumes:
       - ./streamlit:/app
