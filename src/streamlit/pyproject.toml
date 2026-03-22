@@ -9,6 +9,8 @@ python = "^3.12"
 streamlit = "^1.55.0"
 python-dotenv = "^1.2.2"
 requests = "^2.32.5"
+openai = "^2.29.0"
+streamlit-mic-recorder = "^0.0.8"
 
 [build-system]
 requires = ["poetry-core"]
