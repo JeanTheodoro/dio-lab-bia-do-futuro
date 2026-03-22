@@ -27,24 +27,71 @@ A avaliação pode ser feita de duas formas complementares:
 Crie testes simples para validar seu agente:
 
 ### Teste 1: Consulta de gastos
-- **Pergunta:** "Quanto gastei com alimentação?"
-- **Resposta esperada:** Valor baseado no `transacoes.csv`
-- **Resultado:** [ ] Correto  [ ] Incorreto
+- **Teste com o usuario 10000**
+- **Pergunta:** "Aurora, Quanto gastei com alimentação ?"
+- **Resposta:** João, identifiquei uma transação com a descrição "Supermercado mensal" no valor de 930.00. Este foi o único gasto com alimentação registrado nas suas últimas transações.
+- **Resposta esperada:** 
+    ```sql
+    SELECT 
+        t.categoria, 
+        t.valor, 
+        t.tipo_operacao, 
+        t.descricao
+    FROM contas_correntes cc
+    INNER JOIN transacoes t 
+        ON cc.id = t.conta_corrente_id
+    WHERE cc.cod_conta_corrente = 10000
+    AND t.tipo_operacao = 'debito'
+    ORDER BY t.created_at DESC
+    LIMIT 10;
+    ```
+
+    |Categoria       | Valor   | Tipo Operação | Descrição               |
+    |----------------|---------|---------------|-------------------------|
+    | lazer          | 650.00  | debito        | Viagem curta            |
+    | conta_agua     | 118.00  | debito        | Conta de água           |
+    | conta_luz      | 220.00  | debito        | Conta de luz            |
+    | farmacia       | 150.00  | debito        | Farmácia                |
+    | combustivel    | 610.00  | debito        | Combustível carro       |
+    | ipva           | 1600.00 | debito        | Pagamento IPVA          |
+    |**supermercado** | **930.00** | **debito** | **Supermercado mensal**|
+    | iptu           | 850.00  | debito        | Pagamento IPTU          |
+    | aluguel        | 3200.00 | debito        | Aluguel apartamento     |
+    | lazer          | 380.00  | debito        | Cinema e jantar         |
+
+**Obs:** Os dados da tabela acima, poder ser acessado no arquivo [dado da tabela de transações](../data/sql/inserir_dados.sql)
+na linha 53.
+
+- **Resultado:** [X] Correto  [ ] Incorreto
 
 ### Teste 2: Recomendação de produto
+- **Teste com o usuario 10002**
+
 - **Pergunta:** "Qual investimento você recomenda para mim?"
-- **Resposta esperada:** Produto compatível com o perfil do cliente
-- **Resultado:** [ ] Correto  [ ] Incorreto
+
+- **Resposta esperada:** Carlos Pereira, considerando seu perfil de investidor arrojado e sua tolerância ao risco, sugiro que você avalie o investimento em Ações Tech Brasil, ETF BOVA11 ou ETF IVVB11. Esses investimentos apresentam alto risco, mas também potencial de alta rentabilidade, alinhados com sua disposição para assumir riscos maiores. Caso prefira opções com menor risco, o Tesouro Selic ou o CDB Banco XPTO também são boas alternativas, com rentabilidade atrelada ao CDI. Para mais informações e auxílio na escolha, sugiro consultar um profissional do banco.
+
+- **Resultado:** [X] Correto  [ ] Incorreto
 
 ### Teste 3: Pergunta fora do escopo
+- **Teste com o usuario 10000**
 - **Pergunta:** "Qual a previsão do tempo?"
-- **Resposta esperada:** Agente informa que só trata de finanças
-- **Resultado:** [ ] Correto  [ ] Incorreto
+- **Resposta esperada:** 
+    Prezado João Silva,
+    Não tenho acesso a informações sobre a previsão do tempo. Sou uma assistente financeira e posso fornecer informações sobre sua conta, metas e investimentos.
+    Caso necessite de informações sobre o clima, sugiro consultar um aplicativo ou site de meteorologia.
+
+    Obrigado! 😊
+- **Resultado:** [X] Correto  [ ] Incorreto
 
 ### Teste 4: Informação inexistente
+- **Teste com o usuario 10001**
+
 - **Pergunta:** "Quanto rende o produto XYZ?"
-- **Resposta esperada:** Agente admite não ter essa informação
-- **Resultado:** [ ] Correto  [ ] Incorreto
+
+- **Resposta esperada:** Maria Souza, o produto XYZ não possui investimentos cadastrados em sua conta. Além disso, seu perfil investidor é conservador e você não aceita riscos. Por gentileza, entre em contato com um de nossos profissionais na agência mais próxima para que possamos ajudá-lo melhor. 😊
+
+- **Resultado:** [x] Correto  [ ] Incorreto
 
 ---
 
