@@ -8,15 +8,6 @@ VALUES
 ('Ana Costa', 31, 'Desenvolvedora', 9000.00, 'moderado', 'Compra de imóvel', TRUE),
 ('Fernanda Lima', 50, 'Professora', 7000.00, 'conservador', 'Segurança financeira', FALSE);
 
--- =========================
--- Criação das constas correntes
--- =========================
-
--- INSERT INTO dio_bank.contas_correntes(cliente_id) values(1);
--- INSERT INTO dio_bank.contas_correntes(cliente_id) values(2);
--- INSERT INTO dio_bank.contas_correntes(cliente_id) values(3);
--- INSERT INTO dio_bank.contas_correntes(cliente_id) values(4);
--- INSERT INTO dio_bank.contas_correntes(cliente_id) values(5);
 
 -- =========================
 -- Criação das transacoes de cada usuario considerando 3 meses retroativo
@@ -66,9 +57,9 @@ VALUES
 (1,'Conta de água','conta_agua',118.00,'debito','2026-03-22'),
 (1,'Viagem curta','lazer',650.00,'debito','2026-03-27'),
 
-
+        
 -- =========================
--- MARIA SOUZA (Marketing - 6500)
+-- MARIA SOUZA (Marketing - 6500)   
 -- =========================
 
 (2,'Salário mensal Janeiro','salario',6500.00,'credito','2026-01-05'),
