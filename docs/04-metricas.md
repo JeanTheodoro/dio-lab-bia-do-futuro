@@ -100,11 +100,33 @@ na linha 53.
 Após os testes, registre suas conclusões:
 
 **O que funcionou bem:**
-- [Liste aqui]
+
+- Perguntas que utilizam palavras-chave relacionadas ao contexto apresentaram melhor desempenho, pois facilitam a identificação da intenção do usuário e a busca pelos dados corretos.
+
+- No contexto de transações, termos como:
+debito, debitos, credito, creditos, gasto, gastos, gastei, despesa, despesas, transacao, transações, pagamento, ganhos, registro, registros
+ajudaram a direcionar corretamente as respostas.
+
+- No contexto de investimentos, palavras como:
+investimento, investimentos, investir, aplicar, aplicacao, renda
+melhoraram a identificação de perguntas relacionadas a aplicações financeiras.
+Para metas, termos como:
+meta, metas, objetivo, objetivos, planejamento
+permitiram respostas mais assertivas sobre planejamento financeiro.
+
+* De forma geral, perguntas mais específicas e com vocabulário alinhado ao domínio financeiro resultaram em respostas mais precisas e relevantes.
 
 **O que pode melhorar:**
-- [Liste aqui]
+* Em perguntas relacionadas a cálculo de gastos, a LLM tende a realizar automaticamente somas e análises, mesmo quando isso não é solicitado explicitamente.
 
+* Esse comportamento pode gerar respostas fora do escopo esperado, principalmente em casos onde o objetivo era apenas listar transações e não calcular totais.
+
+* É necessário reforçar nas instruções que cálculos (como soma de débitos ou créditos) só devem ser realizados quando o usuário pedir explicitamente.
+
+* Também pode ser interessante melhorar a distinção entre intenções, como:
+    * listagem de transações
+    * cálculo de totais
+    * análise financeira
 ---
 
 ## Métricas Avançadas (Opcional)
