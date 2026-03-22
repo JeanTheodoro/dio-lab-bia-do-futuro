@@ -124,9 +124,13 @@ Após subir os containers e inserir os dados, você poderá acessar:
 ```
 http://localhost:8501
 ```
+-----
+![demostração da ultilização da assitente aurora](../assets/demostraca-da_aplicacao_aurora.gif)
+
 
 ### Documentação da API (Swagger)
 
 ```
 http://127.0.0.1:8000/docs
 ```
+
