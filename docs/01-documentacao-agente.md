@@ -51,37 +51,47 @@ Comunicação clara, objetiva e direta, com abordagem simples e didática
 
 ```mermaid
 flowchart TD
-    A[Streamlit UI] --> B[Router FastAPI<br>POST /api/v1/ask_assistent_ia]
-    B --> C[get_bank_assistant]
-    C --> D[LLMFactory.create]
-    D -->|LLM_PROVIDER = ollama| E[OllamaProvider]
-    D -->|LLM_PROVIDER = grok| F[GrokProvider]
 
-    E --> G[BankAssistant]
-    F --> G
+A[Streamlit UI] --> B[Router FastAPI<br>POST /api/v1/ask_assistent_ia]
 
-    G --> H[assistant.ask<br>question cod_conta session_db]
-    H --> I[detectar_intencao]
-    I --> J[ContextBuilder.build]
-    
-    J --> K[Buscar cliente<br>Database]
-    J --> L[Buscar transacoes<br>Database]
-    J --> M[Buscar metas<br>Database]
-    J --> N[Buscar investimentos<br>Database]
+B --> C[ask_ai]
+C --> D[LLMFactory.create]
+D --> E[Provider LLM]
+E --> F[BankAssistant]
 
-    K --> O[Contexto Completo]
-    L --> O
-    M --> O
-    N --> O
+C --> G[assistant.ask]
 
-    O --> P[Montar Prompt<br>SYSTEM_PROMPT + HUMAN_PROMPT]
-    P --> Q[Criar mensagens<br>SystemMessage HumanMessage]
-    Q --> R[LLM Provider<br>ainvoke]
-    R --> S[Ollama<br>gemma3]
-    S --> T[Resposta LLM]
-    T --> U[BankAssistant]
-    U --> V[Router]
-    V --> W[JSON Response<br>answer]
+G --> H[detectar_intencao]
+H --> I[Tipos: transacao / investimento / meta]
+
+G --> J[ContextBuilder.build]
+
+J --> K[Buscar cliente]
+K --> L[AssistanteIaService.buscar_resumo]
+
+J --> M{Tipo contém?}
+
+M -->|transacao| N[Buscar transações]
+N --> O[busca_transacoes]
+
+M -->|investimento| P[Buscar metas + investimentos + transações]
+P --> Q[busca_metas]
+P --> R[busca_investimentos]
+P --> S[busca_transacoes]
+
+M -->|meta| T[Buscar metas]
+T --> U[busca_metas]
+
+J --> V[Serialize para JSON]
+
+V --> W[Monta HUMAN_PROMPT]
+W --> X[Cria mensagens (System + Human)]
+
+X --> Y[provider.ainvoke]
+Y --> Z[Resposta da IA]
+
+Z --> AA[Return JSON {answer}]
+AA --> A
 ```
 
 ### Componentes
