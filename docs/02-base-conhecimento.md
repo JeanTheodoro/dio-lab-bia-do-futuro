@@ -125,6 +125,8 @@ Esses dados são utilizados como base de conhecimento do sistema, permitindo que
 
 ### Como os dados são carregados?
 > Descreva como seu agente acessa a base de conhecimento.
+
+
 O agente acessa a base de conhecimento por meio de consultas a um banco de dados relacional integrado à API desenvolvida com FastAPI. Quando uma pergunta é recebida, o sistema realiza consultas dinâmicas ao banco utilizando SQLAlchemy, por meio do componente ContextBuilder. Esse componente busca informações relevantes em tabelas como clientes, transações, metas, contas de investimento e produtos financeiros. Os dados retornados dessas consultas são organizados em um objeto de contexto estruturado, geralmente no formato de dicionário ou JSON. Em seguida, esse contexto é inserido dinamicamente em um template de prompt que será enviado ao modelo de linguagem, permitindo que a resposta gerada utilize informações que
 está armazenadas no sistema.
 
