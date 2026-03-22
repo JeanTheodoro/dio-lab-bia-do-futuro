@@ -1,132 +1,44 @@
-# Código da Aplicação
+# 🚀 Visão Geral Do Projeto
 
-Esta pasta contém o código do seu agente financeiro.
+Este projeto implementa uma assistente financeira inteligente (Aurora) utilizando modelos de linguagem (LLM) executados localmente com Ollama, backend em FastAPI e interface construída com Streamlit.
 
-## Estrutura Sugerida
+A aplicação permite que usuários consultem informações financeiras por meio de linguagem natural, com base em dados estruturados armazenados no banco de dados.
 
-```
-## 📁 Estrutura do Projeto
+## Arquitetura do projeto
 
-```bash
-.
-├── README.md
-├── docker-compose.yml
-│
-├── api → (Backend (FastAPI + IA + regras de negócio))
-│   ├── Dockerfile
-│   ├── pyproject.toml
-│   ├── poetry.lock
-│   ├── main.py
-│   │
-│   ├── core
-│   │   ├── database.py
-│   │   └── shared
-│   │       ├── config_logging.py
-│   │       ├── dependencies.py
-│   │       └── settings.py
-│   │
-│   ├── llm → (Integração com modelos de linguagem)
-│   │   ├── factory
-│   │   │   └── factory_llm.py
-│   │   │
-│   │   ├── prompt
-│   │   │   ├── bank_human.py
-│   │   │   └── bank_system.py
-│   │   │
-│   │   ├── provider
-│   │   │   ├── base_proviser.py
-│   │   │   ├── grok_provider.py
-│   │   │   └── ollma_provider.py
-│   │   │
-│   │   ├── serializer
-│   │   │   └── serialization.py
-│   │   │
-│   │   └── services
-│   │       ├── bank_assistente.py
-│   │       ├── context_builder.py
-│   │       └── intent_classifier.py
-│   │
-│   ├── models
-│   │   └── bank
-│   │       └── models_bank.py
-│   │
-│   ├── repository → acesso a dados
-│   │   ├── bank_profile
-│   │   │   └── cliente.py
-│   │   │
-│   │   ├── bank_transection
-│   │   │   └── conta.py
-│   │   │
-│   │   └── ia
-│   │       └── asssitante.py
-│   │
-│   ├── router → (endpoints da API)
-│   │   ├── bank_profile
-│   │   │   └── cliente.py
-│   │   │
-│   │   ├── bank_transection
-│   │   │   └── conta.py
-│   │   │
-│   │   └── ia
-│   │       └── assistant.py
-│   │
-│   ├── schemas → (validação (Pydantic))
-│   │   ├── ai
-│   │   │   └── assistant.py
-│   │   │
-│   │   └── bank
-│   │       ├── cliente.py
-│   │       ├── conta.py
-│   │       ├── historico.py
-│   │       ├── metas.py
-│   │       └── transacao.py
-│   │
-│   └── service
-│       ├── bank_profile
-│       │   └── cliente.py
-│       │
-│       ├── bank_transection
-│       │   └── conta.py
-│       │
-│       └── ia
-│           └── assistant.py
-│
-├── db → (scripts SQL)
-│   ├── init.sql
-│   └── init_create_table.sql
-│
-├── ollama → (container do modelo LLM)
-│   └── Dockerfile
-│
-└── streamlit → (UI(interface do usuário))
-    ├── Dockerfile
-    ├── pyproject.toml
-    ├── poetry.lock
-    ├── main.py
-    └── service.py
-```
+![estrutura do projto](../assets/estrutura_do_projeto.png)
+A arquitetura é baseada em containers orquestrados com Docker Compose e é composta pelos seguintes serviços:
 
-## Exemplo da biblioteca ultlizdas src/api/poetry.lock
-```
-asyncpg              0.31.0    An asyncio PostgreSQL driver
-fastapi              0.133.1   FastAPI framework, high performance, easy to learn, fast to code, ready for production
-langchain-ollama     1.0.1     An integration package connecting Ollama and LangChain
-langchain-openai     1.1.10    An integration package connecting OpenAI and LangChain
-pydantic             2.12.5    Data validation using Python type hints
-pydantic-settings    2.13.1    Settings management using Pydantic
-python-dotenv        1.2.2     Read key-value pairs from a .env file and set them as environment variables
-requests             2.32.5    Python HTTP for Humans.
-sqlalchemy           2.0.48    Database Abstraction Library
-```
+### 🔹 Componentes principais
 
-## Exemplo da biblioteca ultlizdas src/streamlit/poetry.lock
-```
-python-dotenv             1.2.2        Read key-value pairs from a .env file and set them as environment variables
-requests                  2.32.5       Python HTTP for Humans.
-streamlit                 1.55.0       A faster way to build and share data apps
-```
+* **Streamlit (Frontend)**
 
-## 🚀 Como Rodar o Projeto
+  * Interface do usuário
+  * Responsável pela interação com o usuário (chat)
+
+* **FastAPI (Backend)**
+
+  * Gerencia as requisições
+  * Contém as regras de negócio
+  * Integra com banco de dados e LLM
+
+* **Ollama (LLM)**
+
+  * Executa o modelo de linguagem (ex: Gemma)
+  * Responsável pela geração das respostas
+
+* **PostgreSQL**
+
+  * Armazena os dados financeiros do usuário
+  * Fonte de dados da aplicação
+
+* **Volumes Docker**
+
+  * `postgres_data`: persistência do banco
+  * `ollama_data`: persistência dos modelos
+---
+
+## 🚀 Como Executar o Projeto
 
 ### 1️⃣ Acessar o diretório do projeto
 
