@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "streamlit-dio-bank"
+version = "0.0.1"
+description = "streamlit chat assistente aurora"
+authors = ["Jean <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.55.0"
+python-dotenv = "^1.2.2"
+requests = "^2.32.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
