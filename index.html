@@ -275,7 +275,24 @@ erDiagram
     CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
   </div>
 
-  <h3>📌 Importância das Triggers</h3>
+<h3>🔢 Geração automática do código da conta (Sequence) </h3>
+
+<p>
+Para garantir que cada conta corrente possua um identificador único e sequencial,
+foi criada a sequence <code>seq_cod_conta</code>, iniciando em <strong>10000</strong>.
+</p>
+
+<p>
+Essa sequence é utilizada em conjunto com a trigger de criação de conta corrente,
+permitindo que o número da conta seja gerado automaticamente no momento da inserção do cliente.
+</p>
+
+<pre><code>
+CREATE SEQUENCE IF NOT EXISTS dio_bank.seq_cod_conta START 10000;
+</code></pre>
+
+
+<h3>📌 Importância das Triggers</h3>
 <p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira:</p>
 
 <h4>Atualização automática de saldo</h4>
@@ -652,7 +669,7 @@ EXECUTE FUNCTION dio_bank.criar_conta_corrente();
 <p>"Seu saldo atual é de 68466.0. Seu último gasto foi com supermercado no valor de 930.0."</p>
 
 <h2>🎬 Exibição do funcionamento da aplicação</h2>
-<video src="assets/demostraca-da_aplicacao_aurora.mp4" alt="Exibicao">
+<img src="assets/demostraca-da_aplicacao_aurora.gif" alt="Exibicao">
 
 <hr>
 
