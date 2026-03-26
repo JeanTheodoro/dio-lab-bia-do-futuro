@@ -68,7 +68,7 @@
 <p>Aurora é uma assistente financeira inteligente que utiliza modelos de linguagem (LLM) integrados a um banco de dados relacional para fornecer respostas personalizadas com base no contexto financeiro do cliente. A aplicação combina FastAPI, PostgreSQL, Ollama (LLM local) e Streamlit para criar um chatbot capaz de analisar transações, metas e perfil do usuário, entregando respostas seguras, contextualizadas e sem alucinação.</p>
 
 <h3>Arquitetura do projeto</h3>
-<img src="assets/estrutura_do_projeto.png" alt="Arquitetura">
+<img src="assets/aquitetura_chat_bot_aurora.png" alt="Arquitetura">
 
 <hr>
 
@@ -180,75 +180,6 @@
     <li>Automação e consistência de dados via triggers</li>
 </ul>
 
-<h3>📌 Importância das Triggers</h3>
-<p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira:</p>
-
-<h4>Atualização automática de saldo</h4>
-<p>Toda vez que uma transação é inserida na tabela <code>transacoes</code>, a trigger <code>trg_atualiza_saldo</code> executa a função <code>fn_atualiza_saldo</code> que:</p>
-<ul>
-    <li>Incrementa o saldo da conta em caso de crédito</li>
-    <li>Decrementa o saldo em caso de débito</li>
-    <li>Valida se o saldo + limite da conta é suficiente, evitando débitos indevidos</li>
-</ul>
-
-<pre><code>CREATE OR REPLACE FUNCTION dio_bank.fn_atualiza_saldo()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-AS $$
-DECLARE
-    saldo_atual_conta NUMERIC;
-    limite_conta_valor NUMERIC;
-BEGIN
-    SELECT saldo_atual, limite_conta
-    INTO saldo_atual_conta, limite_conta_valor
-    FROM dio_bank.contas_correntes
-    WHERE id = NEW.conta_corrente_id;
-
-    IF NEW.tipo_operacao = 'credito' THEN
-        UPDATE dio_bank.contas_correntes
-        SET saldo_atual = saldo_atual + NEW.valor
-        WHERE id = NEW.conta_corrente_id;
-
-    ELSIF NEW.tipo_operacao = 'debito' THEN
-        IF saldo_atual_conta + limite_conta_valor < NEW.valor THEN
-            RAISE EXCEPTION 'Saldo insuficiente para realizar o débito';
-        END IF;
-
-        UPDATE dio_bank.contas_correntes
-        SET saldo_atual = saldo_atual - NEW.valor
-        WHERE id = NEW.conta_corrente_id;
-    END IF;
-
-    RETURN NEW;
-END;
-$$;
-
-CREATE TRIGGER trg_atualiza_saldo
-AFTER INSERT ON dio_bank.transacoes
-FOR EACH ROW
-EXECUTE FUNCTION dio_bank.fn_atualiza_saldo();
-</code></pre>
-
-<h4>Criação automática de conta corrente</h4>
-<p>Quando um novo cliente é inserido na tabela <code>clientes</code>, a trigger <code>trg_criar_conta_corrente</code> cria automaticamente uma conta corrente associada, garantindo que todo cliente tenha sua conta pronta para transações.</p>
-
-<pre><code>CREATE OR REPLACE FUNCTION dio_bank.criar_conta_corrente()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO dio_bank.contas_correntes(cliente_id)
-    VALUES (NEW.id);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_criar_conta_corrente
-AFTER INSERT ON dio_bank.clientes
-FOR EACH ROW
-EXECUTE FUNCTION dio_bank.criar_conta_corrente();
-</code></pre>
-
-
-<blockquote>✅ Com isso, asseguramos integridade, evitamos inconsistências manuais e reduzimos a complexidade da lógica na camada da aplicação.</blockquote>
 
 <h3>📊 Entidades principais</h3>
 <ul>
@@ -344,6 +275,77 @@ erDiagram
     CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
   </div>
 
+  <h3>📌 Importância das Triggers</h3>
+<p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira:</p>
+
+<h4>Atualização automática de saldo</h4>
+<p>Toda vez que uma transação é inserida na tabela <code>transacoes</code>, a trigger <code>trg_atualiza_saldo</code> executa a função <code>fn_atualiza_saldo</code> que:</p>
+<ul>
+    <li>Incrementa o saldo da conta em caso de crédito</li>
+    <li>Decrementa o saldo em caso de débito</li>
+    <li>Valida se o saldo + limite da conta é suficiente, evitando débitos indevidos</li>
+</ul>
+
+<pre><code>CREATE OR REPLACE FUNCTION dio_bank.fn_atualiza_saldo()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    saldo_atual_conta NUMERIC;
+    limite_conta_valor NUMERIC;
+BEGIN
+    SELECT saldo_atual, limite_conta
+    INTO saldo_atual_conta, limite_conta_valor
+    FROM dio_bank.contas_correntes
+    WHERE id = NEW.conta_corrente_id;
+
+    IF NEW.tipo_operacao = 'credito' THEN
+        UPDATE dio_bank.contas_correntes
+        SET saldo_atual = saldo_atual + NEW.valor
+        WHERE id = NEW.conta_corrente_id;
+
+    ELSIF NEW.tipo_operacao = 'debito' THEN
+        IF saldo_atual_conta + limite_conta_valor < NEW.valor THEN
+            RAISE EXCEPTION 'Saldo insuficiente para realizar o débito';
+        END IF;
+
+        UPDATE dio_bank.contas_correntes
+        SET saldo_atual = saldo_atual - NEW.valor
+        WHERE id = NEW.conta_corrente_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_atualiza_saldo
+AFTER INSERT ON dio_bank.transacoes
+FOR EACH ROW
+EXECUTE FUNCTION dio_bank.fn_atualiza_saldo();
+</code></pre>
+
+<h4>Criação automática de conta corrente</h4>
+<p>Quando um novo cliente é inserido na tabela <code>clientes</code>, a trigger <code>trg_criar_conta_corrente</code> cria automaticamente uma conta corrente associada, garantindo que todo cliente tenha sua conta pronta para transações.</p>
+
+<pre><code>CREATE OR REPLACE FUNCTION dio_bank.criar_conta_corrente()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO dio_bank.contas_correntes(cliente_id)
+    VALUES (NEW.id);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_criar_conta_corrente
+AFTER INSERT ON dio_bank.clientes
+FOR EACH ROW
+EXECUTE FUNCTION dio_bank.criar_conta_corrente();
+</code></pre>
+
+
+<blockquote>✅ Com isso, asseguramos integridade, evitamos inconsistências manuais e reduzimos a complexidade da lógica na camada da aplicação.</blockquote>
+
+
 <hr>
 
 <h2>2. ⚙️ API com FastAPI</h2>
@@ -366,7 +368,6 @@ erDiagram
 │   │   │   ├── bank_assistente.py
 │   │   │   ├── context_builder.py
 │   │   │   └── intent_classifier.py
-│   │
 │   ├── models → modelos do banco
 │   ├── repository → acesso a dados
 │   ├── router → endpoints
@@ -374,11 +375,68 @@ erDiagram
 │   └── service → regras de negócio
 </code></pre>
 
-<h3>🔗 Endpoint principal</h3>
-<pre><code>POST /api/v1/ask_assistent_ia
+<h3>🔗 Endpoints da API</h3>
+
+<h4>👤 Cliente</h4>
+
+<p><strong>POST /api/v1/</strong> → Criar cliente</p>
+<pre><code>{
+  "nome": "João Silva",
+  "idade": 32,
+  "profissao": "Analista",
+  "renda_mensal": 5000,
+  "perfil_investidor": "moderado",
+  "objetivo_principal": "Reserva de emergência",
+  "aceita_risco": false
+}
 </code></pre>
 
-<p>Responsável por receber a pergunta do usuário e retornar a resposta da IA.</p>
+<p><strong>GET /api/v1/?cod_account=1</strong> → Buscar cliente</p>
+
+<hr>
+
+<h4>🏦 Conta</h4>
+
+<p><strong>GET /api/v1/{cod_conta}?cod_account=1</strong> → Buscar dados da conta</p>
+
+<p><strong>Resposta:</strong></p>
+<pre><code>{
+  "client": {
+    "nome": "João Silva",
+    "idade": 32,
+    "renda_mensal": 5000
+  },
+  "transection": [
+    {
+      "descricao": "Supermercado",
+      "valor": 200
+    }
+  ]
+}
+</code></pre>
+
+<hr>
+
+<h4>🤖 Assistente IA</h4>
+
+<p><strong>POST /api/v1/ask_assistent_ia</strong></p>
+
+<p><strong>Request:</strong></p>
+<pre><code>{
+  "question": "Qual meu saldo?",
+  "cod_conta": 10000
+}
+</code></pre>
+
+<p><strong>Response:</strong></p>
+<pre><code>{
+  "answer": "Seu saldo atual é de 68466.0"
+}
+</code></pre>
+
+<blockquote>
+🚀 Esse endpoint integra diretamente com a LLM (Ollama) para gerar respostas inteligentes baseadas no contexto do usuário.
+</blockquote>
 
 <h2>3. 🤖 LLM com Ollama</h2>
 
@@ -420,6 +478,73 @@ erDiagram
     <li>UI exibe resposta</li>
 </ol>
 
+<h2>Diagrama de Fluxo do App</h2>
+
+   <div class="mermaid">
+        flowchart TD
+            A[Início Streamlit] --> B[Configuração da página + OpenAI Client]
+
+            B --> C{Session State inicializado?}
+            C -->|Não| D[Inicializa modo, cod_conta e messages]
+            C -->|Sim| E
+
+            D --> E{Modo definido?}
+
+            %% ETAPA 1
+            E -->|Não| F[Exibe botões Texto ou Voz]
+            F -->|Texto| G[Define modo = texto]
+            F -->|Voz| H[Define modo = voz]
+            G --> E
+            H --> E
+
+            %% ETAPA 2
+            E -->|Sim| I{Conta definida?}
+            I -->|Não| J[Input número da conta]
+            J --> K{Conta válida?}
+            K -->|Sim| L[Salva cod_conta]
+            K -->|Não| M[Exibe erro]
+            L --> I
+
+            %% ETAPA 3 - CHAT
+            I -->|Sim| N[Exibe header + botão trocar]
+            N --> O[Exibe histórico de mensagens]
+
+            O --> P{Modo}
+
+            %% TEXTO
+            P -->|texto| Q[Usuário digita pergunta]
+
+            %% VOZ
+            P -->|voz| R[Grava áudio]
+            R --> S[Salva arquivo temporário]
+            S --> T[Transcreve áudio OpenAI]
+            T --> U{Erro?}
+            U -->|Sim| V[Exibe erro]
+            U -->|Não| W[Obtém texto da pergunta]
+            W --> X[Remove arquivo temp]
+
+            %% UNIFICAÇÃO
+            Q --> Y{Existe pergunta?}
+            X --> Y
+
+            %% PROCESSAMENTO
+            Y -->|Sim| Z[Adiciona msg user no histórico]
+            Z --> AA[Chama FastAPI Request.post]
+
+            AA --> AB{Resposta válida?}
+            AB -->|Não| AC[Resposta inválida]
+            AB -->|Sim| AD[Extrai answer]
+
+            AC --> AE
+            AD --> AE
+
+            AE[Adiciona resposta no histórico] --> AF[Exibe resposta na tela]
+
+            %% TROCAR
+            N --> AG{Clicou trocar?}
+            AG -->|Sim| AH[Reseta sessão]
+            AH --> E
+    </div>
 <hr>
 
 <h2>5. 💬 Funcionamento do Chatbot</h2>
@@ -530,6 +655,111 @@ erDiagram
 <img src="assets/demostraca-da_aplicacao_aurora.gif" alt="Exibicao">
 
 <hr>
+
+<h2>📌 Engenharia de Prompt</h2>
+
+<p>
+A Aurora utiliza dois tipos de prompt para garantir respostas precisas e sem alucinação:
+</p>
+
+<ul>
+    <li><strong>System Prompt</strong> → define comportamento, regras e limites da IA</li>
+    <li><strong>Human Prompt</strong> → injeta os dados reais do cliente no contexto</li>
+</ul>
+
+<hr>
+
+<h3>🧠 Prompts Utilizados</h3>
+
+<details>
+    <summary><strong>📌 System Prompt (regras da IA)</strong></summary>
+    <pre><code>
+Aurora você é uma assistente financeira de um banco digital, 
+suas resposta são educada, amigável e objetiva.
+
+Sua tarefa é responder perguntas usando SOMENTE os dados fornecidos.
+
+REGRAS IMPORTANTES:
+
+1. Use apenas os dados das seções:
+   - DADOS_CLIENTE
+   - TRANSACOES
+   - METAS
+   - INVESTIMENTOS
+
+2. Nunca invente informações.
+
+3. Nunca corrija a escrita do cliente 
+
+4. Nunca julgue os gastos financeiros do cliente
+
+5. Último débito:
+   - tipo_operacao = debito
+   - mais recente por created_at
+
+6. Último crédito:
+   - tipo_operacao = credito
+   - mais recente por created_at
+
+7. Saldo:
+   - usar campo saldo_atual
+
+8. Investimentos:
+   - conservador → baixo risco
+   - moderado → equilibrado
+   - arrojado → maior risco
+
+9. Sempre iniciar com o nome do usuário
+
+10. Listagem de transações:
+   - apenas descrição, valor e data
+
+11. Cálculos:
+   - somar créditos e débitos corretamente
+
+12. Respostas:
+   - simples, objetiva, até 4 frases
+   - sem markdown ou formatação especial
+    </code></pre>
+</details>
+
+<details>
+    <summary><strong>📌 Human Prompt (template dinâmico)</strong></summary>
+    <pre><code>
+### PERGUNTA
+{PERGUNTA}
+
+### DADOS_CLIENTE
+{DADOS_CLIENTE}
+
+### TRANSACOES
+{TRANSACOES_BANCARIAS}
+
+### METAS
+{METAS}
+
+### INVESTIMENTOS
+{PRODUTOS_DISPONIVEIS}
+
+INSTRUÇÃO:
+Use apenas os dados acima para responder à pergunta.
+    </code></pre>
+</details>
+
+<hr>
+
+<h2>💡 Como funciona</h2>
+
+<ol>
+    <li>Usuário envia pergunta</li>
+    <li>API identifica intenção</li>
+    <li>Busca dados no banco</li>
+    <li>Monta o contexto</li>
+    <li>Gera os prompts (System + Human)</li>
+    <li>Envia para o modelo (Ollama)</li>
+    <li>Retorna resposta ao usuário</li>
+</ol>
+
 
 <h2>🎯 Conclusão</h2>
 
