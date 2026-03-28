@@ -1,93 +1,522 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        // Configuração para forçar linhas pretas e estilo clean
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#ffffff',
-                primaryTextColor: '#000000',
-                primaryBorderColor: '#000000',
-                lineColor: '#000000', // Cor das setas/linhas
-                secondaryColor: '#f4f4f4',
-                tertiaryColor: '#ffffff',
-                fontFamily: 'arial'
-            }
-        });
-    </script>
-    <title>Aurora - Assistente Financeira com IA</title>
-    <style>
-      
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            max-width: 900px;
-        }
-        h1, h2, h3, h4 {
-            color: #2c3e50;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-        img {
-            max-width: 100%;
-        }
-        blockquote {
-            border-left: 4px solid #2c3e50;
-            padding-left: 10px;
-            color: #555;
-        }
-        hr {
-            border: none;
-            border-top: 1px solid #ccc;
-            margin: 30px 0;
-        }
-        ul, ol {
-            margin-left: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora — Assistente Financeira com IA</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#3d2b6e',
+        primaryTextColor: '#e2d9f3',
+        primaryBorderColor: '#7c4dff',
+        lineColor: '#9c6fff',
+        secondaryColor: '#1e1b2e',
+        tertiaryColor: '#2a2440',
+        fontFamily: 'Source Sans 3, sans-serif',
+        background: '#1a1625'
+      }
+    });
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main:      #1a1625;
+      --bg-sidebar:   #111019;
+      --bg-surface:   #211d30;
+      --bg-raised:    #2a2440;
+      --purple:       #7c4dff;
+      --purple-mid:   #9c6fff;
+      --purple-light: #c4a8ff;
+      --purple-pale:  #2d2550;
+      --teal:         #00bfa5;
+      --text-bright:  #e2d9f3;
+      --text-mid:     #b0a8cc;
+      --text-dim:     #7a7090;
+      --border:       #3a3358;
+      --nav-width:    260px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+      color: var(--text-bright);
+      background: var(--bg-main);
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    nav#sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--nav-width);
+      height: 100vh;
+      background: var(--bg-sidebar);
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 2rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      padding: 2rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand .aurora-icon { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+
+    .nav-brand h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .nav-brand p {
+      font-size: 0.72rem;
+      color: var(--purple-mid);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .nav-section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 1.4rem 1.5rem 0.5rem;
+      font-weight: 600;
+    }
+
+    nav#sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 1.5rem;
+      color: var(--text-mid);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    nav#sidebar a:hover,
+    nav#sidebar a.active {
+      color: #fff;
+      background: rgba(124,77,255,0.1);
+      border-left-color: var(--purple);
+    }
+
+    nav#sidebar a .icon { width: 1.2rem; text-align: center; flex-shrink: 0; }
+
+    /* ── MAIN ── */
+    main { margin-left: var(--nav-width); flex: 1; min-height: 100vh; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #12102a 0%, #1e1040 50%, #0f1a2e 100%);
+      padding: 4rem 4rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,77,255,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span { color: var(--purple-light); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+    .badge {
+      background: rgba(124,77,255,0.15);
+      border: 1px solid rgba(124,77,255,0.35);
+      color: var(--purple-light);
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+    }
+
+    .badge.teal {
+      background: rgba(0,191,165,0.12);
+      border-color: rgba(0,191,165,0.35);
+      color: var(--teal);
+    }
+
+    .badge a { color: inherit; text-decoration: none; }
+
+    /* ── CONTENT ── */
+    .content { max-width: 860px; margin: 0 auto; padding: 3rem 3rem 5rem; }
+
+    section { margin-bottom: 3.5rem; scroll-margin-top: 2rem; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--purple-light);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    h4 {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+      margin: 1.2rem 0 0.5rem;
+    }
+
+    p {
+      font-size: 0.975rem;
+      line-height: 1.8;
+      color: var(--text-mid);
+      margin-bottom: 0.75rem;
+    }
+
+    a { color: var(--purple-mid); text-decoration: none; }
+    a:hover { color: var(--purple-light); text-decoration: underline; }
+
+    /* ── CODE ── */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--purple-pale);
+      color: var(--purple-light);
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      font-size: 0.82em;
+    }
+
+    pre {
+      background: #0d0b18;
+      color: #c4b8e8;
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      margin: 1rem 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+    blockquote {
+      border-left: 4px solid var(--purple);
+      background: var(--purple-pale);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+      color: var(--text-mid);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── TABLES ── */
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
+
+    thead tr { background: var(--purple-pale); }
+
+    thead th {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      border-bottom: 2px solid var(--purple);
+      letter-spacing: 0.04em;
+    }
+
+    tbody tr:nth-child(odd)  { background: var(--bg-surface); }
+    tbody tr:nth-child(even) { background: var(--bg-raised); }
+    tbody tr:hover           { background: rgba(124,77,255,0.08); }
+
+    td { padding: 0.6rem 1rem; color: var(--text-mid); border-bottom: 1px solid var(--border); }
+
+    /* ── LISTS ── */
+    ul, ol { padding-left: 1.4rem; margin: 0.5rem 0 0.75rem; }
+    li { font-size: 0.95rem; line-height: 1.75; color: var(--text-mid); margin-bottom: 0.25rem; }
+
+    /* ── DETAILS ── */
+    details {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 0.75rem 0;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 0.9rem 1.25rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-bright);
+      background: var(--bg-raised);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    summary::before {
+      content: '▶';
+      font-size: 0.65rem;
+      transition: transform 0.2s;
+      color: var(--purple-mid);
+    }
+
+    details[open] summary::before { transform: rotate(90deg); }
+    details[open] summary { border-bottom: 1px solid var(--border); }
+    details > *:not(summary) { padding: 0 1.25rem 1rem; }
+
+    /* ── CARDS ── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin: 1rem 0; }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover { border-color: var(--purple); box-shadow: 0 4px 20px rgba(124,77,255,0.15); }
+    .card .card-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .card h4 { text-transform: none; font-size: 0.95rem; color: #fff; letter-spacing: 0; margin: 0 0 0.4rem; }
+    .card p  { font-size: 0.82rem; margin: 0; }
+
+    /* ── IMAGES ── */
+    .img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+      margin: 1.25rem 0;
+    }
+
+    .img-wrap img { width: 100%; display: block; }
+
+    /* ── MERMAID ── */
+    .mermaid-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    /* ── PILL ── */
+    .pill {
+      display: inline-block;
+      background: rgba(124,77,255,0.2);
+      color: var(--purple-light);
+      border: 1px solid rgba(124,77,255,0.4);
+      padding: 0.2em 0.65em;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .back-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+    }
+
+    footer {
+      background: var(--bg-sidebar);
+      color: var(--text-dim);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--purple-mid); }
+
+    @media (max-width: 768px) {
+      nav#sidebar { display: none; }
+      main { margin-left: 0; }
+      .hero { padding: 2.5rem 1.5rem; }
+      .hero h1 { font-size: 2rem; }
+      .content { padding: 2rem 1.5rem 4rem; }
+    }
+  </style>
 </head>
 <body>
 
-<h1>🌞 Aurora - Assistente Financeira com IA</h1>
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<nav id="sidebar">
+  <div class="nav-brand">
+    <span class="aurora-icon">🌟</span>
+    <h2>Aurora</h2>
+    <p>Assistente Financeira IA</p>
+  </div>
 
-<h2>🚀 Visão Geral</h2>
-<p>Aurora é uma assistente financeira inteligente que utiliza modelos de linguagem (LLM) integrados a um banco de dados relacional para fornecer respostas personalizadas com base no contexto financeiro do cliente. A aplicação combina FastAPI, PostgreSQL, Ollama (LLM local) e Streamlit para criar um chatbot capaz de analisar transações, metas e perfil do usuário, entregando respostas seguras, contextualizadas e sem alucinação.</p>
+  <span class="nav-section-label">Projeto</span>
+  <a href="#visao-geral"><span class="icon">🚀</span>Visão Geral</a>
+  <a href="#demonstracao"><span class="icon">🎬</span>Demonstração</a>
 
-<h3>Arquitetura do projeto</h3>
-<img src="assets/aquitetura_chat_bot_aurora.png" alt="Arquitetura">
+  <span class="nav-section-label">Desenvolvimento</span>
+  <a href="#banco-de-dados"><span class="icon">🗄️</span>Banco de Dados</a>
+  <a href="#triggers"><span class="icon">⚡</span>Triggers</a>
+  <a href="#api"><span class="icon">⚙️</span>API FastAPI</a>
+  <a href="#llm"><span class="icon">🤖</span>LLM com Ollama</a>
+  <a href="#interface"><span class="icon">💻</span>Interface Streamlit</a>
+  <a href="#chatbot"><span class="icon">💬</span>Funcionamento do Chat</a>
 
-<hr>
+  <span class="nav-section-label">Engenharia</span>
+  <a href="#prompts"><span class="icon">📌</span>Engenharia de Prompt</a>
+  <a href="#conclusao"><span class="icon">🎯</span>Conclusão</a>
+</nav>
 
-<h2>1. 🗄️ Modelagem do Banco de Dados</h2>
-<p>A partir de uma base inicial em arquivos CSV e JSON: </p>
+<!-- ═══════════ MAIN ═══════════ -->
+<main>
 
-<h3>Dado Fornecidos:</h3>
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">DIO Lab · Bia do Futuro</p>
+    <h1>🌟<span>Aurora</span><br>Assistente Financeira com IA</h1>
+    <p class="hero-desc">
+      Uma assistente financeira inteligente que combina LLM local, banco de dados relacional e
+      interface conversacional para transformar dados financeiros em decisões simples e acessíveis.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">Python</span>
+      <span class="badge">FastAPI</span>
+      <span class="badge">Ollama · gemma3</span>
+      <span class="badge">PostgreSQL</span>
+      <span class="badge">Streamlit</span>
+      <span class="badge">Docker</span>
+      <span class="badge teal">🎥 <a href="https://youtu.be/aUGv6n3p3QA" target="_blank">Pitch no YouTube</a></span>
+    </div>
+  </div>
 
-<h4>historico_atendimento.csv</h4>
-<pre><code>data,canal,tema,resumo,resolvido
+  <div class="content">
+
+    <!-- VISÃO GERAL -->
+    <section id="visao-geral">
+      <div class="section-header">
+        <h2>🚀 Visão Geral</h2>
+      </div>
+      <p>Aurora é uma assistente financeira inteligente que utiliza modelos de linguagem (LLM) integrados a um banco de dados relacional para fornecer respostas personalizadas com base no contexto financeiro do cliente. A aplicação combina <strong>FastAPI</strong>, <strong>PostgreSQL</strong>, <strong>Ollama (LLM local)</strong> e <strong>Streamlit</strong> para criar um chatbot capaz de analisar transações, metas e perfil do usuário, entregando respostas seguras, contextualizadas e sem alucinação.</p>
+
+      <h3>Arquitetura do projeto</h3>
+      <div class="img-wrap">
+        <img src="assets/aquitetura_chat_bot_aurora.png" alt="Arquitetura do projeto">
+      </div>
+    </section>
+
+    <!-- DEMONSTRAÇÃO -->
+    <section id="demonstracao">
+      <div class="section-header">
+        <h2>🎬 Demonstração</h2>
+      </div>
+      <p>Veja a Aurora em funcionamento real — consultas por texto e análise de gastos em tempo real:</p>
+      <div class="img-wrap">
+        <img src="assets/demostraca-da_aplicacao_aurora.gif" alt="Demonstração da Aurora">
+      </div>
+      <blockquote>
+        🎥 Pitch completo de 3 minutos: <a href="https://youtu.be/aUGv6n3p3QA" target="_blank">youtu.be/aUGv6n3p3QA</a>
+      </blockquote>
+    </section>
+
+    <!-- BANCO DE DADOS -->
+    <section id="banco-de-dados">
+      <div class="section-header">
+        <h2>1. 🗄️ Modelagem do Banco de Dados</h2>
+      </div>
+      <p>A partir de uma base inicial em arquivos CSV e JSON, foi realizada a <strong>modelagem de um banco relacional</strong> para permitir:</p>
+      <ul>
+        <li>Relacionamento entre dados</li>
+        <li>Consultas eficientes</li>
+        <li>Escalabilidade</li>
+        <li>Automação e consistência de dados via triggers</li>
+      </ul>
+
+      <h3>Dados Fornecidos</h3>
+
+      <details>
+        <summary>📄 historico_atendimento.csv</summary>
+        <pre><code>data,canal,tema,resumo,resolvido
 2025-09-15,chat,CDB,Cliente perguntou sobre rentabilidade e prazos,sim
 2025-09-22,telefone,Problema no app,Erro ao visualizar extrato foi corrigido,sim
 2025-10-01,chat,Tesouro Selic,Cliente pediu explicação sobre o funcionamento do Tesouro Direto,sim
 2025-10-12,chat,Metas financeiras,Cliente acompanhou o progresso da reserva de emergência,sim
-2025-10-25,email,Atualização cadastral,Cliente atualizou e-mail e telefone,sim
-</code></pre>
+2025-10-25,email,Atualização cadastral,Cliente atualizou e-mail e telefone,sim</code></pre>
+      </details>
 
-<h4>perfil_investidor.json</h4>
-<pre><code>{
+      <details>
+        <summary>📄 perfil_investidor.json</summary>
+        <pre><code>{
   "nome": "João Silva",
   "idade": 32,
   "profissao": "Analista de Sistemas",
@@ -98,67 +527,26 @@
   "reserva_emergencia_atual": 10000.00,
   "aceita_risco": false,
   "metas": [
-    {
-      "meta": "Completar reserva de emergência",
-      "valor_necessario": 15000.00,
-      "prazo": "2026-06"
-    },
-    {
-      "meta": "Entrada do apartamento",
-      "valor_necessario": 50000.00,
-      "prazo": "2027-12"
-    }
+    { "meta": "Completar reserva de emergência", "valor_necessario": 15000.00, "prazo": "2026-06" },
+    { "meta": "Entrada do apartamento", "valor_necessario": 50000.00, "prazo": "2027-12" }
   ]
-}
-</code></pre>
+}</code></pre>
+      </details>
 
-<h4>produtos_financeiros.json</h4>
-<pre><code>[
-  {
-    "nome": "Tesouro Selic",
-    "categoria": "renda_fixa",
-    "risco": "baixo",
-    "rentabilidade": "100% da Selic",
-    "aporte_minimo": 30.00,
-    "indicado_para": "Reserva de emergência e iniciantes"
-  },
-  {
-    "nome": "CDB Liquidez Diária",
-    "categoria": "renda_fixa",
-    "risco": "baixo",
-    "rentabilidade": "102% do CDI",
-    "aporte_minimo": 100.00,
-    "indicado_para": "Quem busca segurança com rendimento diário"
-  },
-  {
-    "nome": "LCI/LCA",
-    "categoria": "renda_fixa",
-    "risco": "baixo",
-    "rentabilidade": "95% do CDI",
-    "aporte_minimo": 1000.00,
-    "indicado_para": "Quem pode esperar 90 dias (isento de IR)"
-  },
-  {
-    "nome": "Fundo Imobiliarios (FII)",
-    "categoria": "fundo",
-    "risco": "medio",
-    "rentabilidade": "Dividend yield (DY) costuma ficar entre 6% a 12% ao ano",
-    "aporte_minimo": 100.00,
-    "indicado_para": "Perfil moderado que busca diversificação e recorrencia mmensal"
-  },
-  {
-    "nome": "Fundo de Ações",
-    "categoria": "fundo",
-    "risco": "alto",
-    "rentabilidade": "Variável",
-    "aporte_minimo": 100.00,
-    "indicado_para": "Perfil arrojado com foco no longo prazo"
-  }
-]
-</code></pre>
+      <details>
+        <summary>📄 produtos_financeiros.json</summary>
+        <pre><code>[
+  { "nome": "Tesouro Selic", "categoria": "renda_fixa", "risco": "baixo", "rentabilidade": "100% da Selic", "aporte_minimo": 30.00 },
+  { "nome": "CDB Liquidez Diária", "categoria": "renda_fixa", "risco": "baixo", "rentabilidade": "102% do CDI", "aporte_minimo": 100.00 },
+  { "nome": "LCI/LCA", "categoria": "renda_fixa", "risco": "baixo", "rentabilidade": "95% do CDI", "aporte_minimo": 1000.00 },
+  { "nome": "Fundo Imobiliarios (FII)", "categoria": "fundo", "risco": "medio", "rentabilidade": "6% a 12% ao ano", "aporte_minimo": 100.00 },
+  { "nome": "Fundo de Ações", "categoria": "fundo", "risco": "alto", "rentabilidade": "Variável", "aporte_minimo": 100.00 }
+]</code></pre>
+      </details>
 
-<h4>transacoes.csv</h4>
-<pre><code>data,descricao,categoria,valor,tipo
+      <details>
+        <summary>📄 transacoes.csv</summary>
+        <pre><code>data,descricao,categoria,valor,tipo
 2025-10-01,Salário,receita,5000.00,entrada
 2025-10-02,Aluguel,moradia,1200.00,saida
 2025-10-03,Supermercado,alimentacao,450.00,saida
@@ -168,145 +556,110 @@
 2025-10-12,Uber,transporte,45.00,saida
 2025-10-15,Conta de Luz,moradia,180.00,saida
 2025-10-20,Academia,saude,99.00,saida
-2025-10-25,Combustível,transporte,250.00,saida
-</code></pre>
+2025-10-25,Combustível,transporte,250.00,saida</code></pre>
+      </details>
 
+      <h3>📊 Entidades principais</h3>
+      <div class="cards">
+        <div class="card"><div class="card-icon">👤</div><h4>Clientes</h4><p>Dados do usuário e perfil de investidor.</p></div>
+        <div class="card"><div class="card-icon">🏦</div><h4>Contas Correntes</h4><p>Saldo e limite da conta.</p></div>
+        <div class="card"><div class="card-icon">💸</div><h4>Transações</h4><p>Histórico financeiro de débitos e créditos.</p></div>
+        <div class="card"><div class="card-icon">📈</div><h4>Produtos Financeiros</h4><p>Investimentos disponíveis.</p></div>
+        <div class="card"><div class="card-icon">🎯</div><h4>Metas</h4><p>Objetivos financeiros do cliente.</p></div>
+        <div class="card"><div class="card-icon">📋</div><h4>Histórico de Atendimento</h4><p>Interações passadas com a Aurora.</p></div>
+      </div>
 
-<p>Foi realizada a <strong>modelagem de um banco relacional</strong> para permitir:</p>
-<ul>
-    <li>Relacionamento entre dados</li>
-    <li>Consultas eficientes</li>
-    <li>Escalabilidade</li>
-    <li>Automação e consistência de dados via triggers</li>
-</ul>
-
-
-<h3>📊 Entidades principais</h3>
-<ul>
-    <li><strong>Clientes</strong> → dados do usuário</li>
-    <li><strong>Contas Correntes</strong> → saldo</li>
-    <li><strong>Transações</strong> → histórico financeiro</li>
-    <li><strong>Produtos Financeiros</strong> → investimentos disponíveis</li>
-    <li><strong>Metas</strong> → objetivos do cliente</li>
-    <li><strong>Contas de Investimento</strong> → carteira do cliente</li>
-    <li><strong>Histórico de Atendimento</strong> → interações passadas</li>
-</ul>
-
-<p>Essa modelagem permite análises como:</p>
-<ul>
-    <li>Último débito/crédito</li>
-    <li>Padrão de gastos</li>
-    <li>Sugestões de investimento</li>
-</ul>
-
-
-<h4> 💾 Diagrama modelo-relacional do banco de dados</h3>
-<div class="mermaid">
+      <h3>💾 Diagrama Entidade-Relacionamento</h3>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
 erDiagram
-    CLIENTES {
-        BIGSERIAL id PK
-        VARCHAR nome
-        INT idade
-        VARCHAR profissao
-        NUMERIC renda_mensal
-        VARCHAR perfil_investidor
-        VARCHAR objetivo_principal
-        BOOLEAN aceita_risco
-        TIMESTAMP created_at
-    }
+  CLIENTES {
+    BIGSERIAL id PK
+    VARCHAR nome
+    INT idade
+    VARCHAR profissao
+    NUMERIC renda_mensal
+    VARCHAR perfil_investidor
+    VARCHAR objetivo_principal
+    BOOLEAN aceita_risco
+    TIMESTAMP created_at
+  }
+  CONTAS_CORRENTES {
+    BIGSERIAL id PK
+    BIGINT cliente_id FK
+    INTEGER cod_conta_corrente
+    NUMERIC saldo_atual
+    NUMERIC limite_conta
+  }
+  TRANSACOES {
+    BIGSERIAL id PK
+    BIGINT conta_corrente_id FK
+    VARCHAR descricao
+    VARCHAR categoria
+    NUMERIC valor
+    VARCHAR tipo_operacao
+    TIMESTAMP created_at
+  }
+  PRODUTOS_FINANCEIROS {
+    BIGSERIAL id PK
+    VARCHAR nome
+    VARCHAR categoria
+    VARCHAR risco
+    NUMERIC aporte_minimo
+    VARCHAR liquidez
+  }
+  CONTAS_INVESTIMENTO {
+    BIGSERIAL id PK
+    BIGINT cliente_id FK
+    BIGINT produto_financeiro_id FK
+    NUMERIC saldo
+  }
+  METAS {
+    BIGSERIAL id PK
+    BIGINT cliente_id FK
+    VARCHAR objetivo
+    NUMERIC valor_necessario
+    DATE prazo
+  }
+  HISTORICO_ATENDIMENTOS {
+    BIGSERIAL id PK
+    BIGINT cliente_id FK
+    DATE data
+    VARCHAR canal
+    VARCHAR tema
+    TEXT resumo
+    BOOLEAN resolvido
+  }
+  CLIENTES ||--o{ CONTAS_CORRENTES : possui
+  CONTAS_CORRENTES ||--o{ TRANSACOES : registra
+  CLIENTES ||--o{ CONTAS_INVESTIMENTO : possui
+  PRODUTOS_FINANCEIROS ||--o{ CONTAS_INVESTIMENTO : investimento
+  CLIENTES ||--o{ METAS : define
+  CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
+        </div>
+      </div>
+    </section>
 
-    CONTAS_CORRENTES {
-        BIGSERIAL id PK
-        BIGINT cliente_id FK
-        INTEGER cod_conta_corrente
-        NUMERIC saldo_atual
-        NUMERIC limite_conta
-    }
+    <!-- TRIGGERS -->
+    <section id="triggers">
+      <div class="section-header">
+        <h2>⚡ Triggers de Automação</h2>
+      </div>
+      <p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira.</p>
 
-    TRANSACOES {
-        BIGSERIAL id PK
-        BIGINT conta_corrente_id FK
-        VARCHAR descricao
-        VARCHAR categoria
-        NUMERIC valor
-        VARCHAR tipo_operacao
-        TIMESTAMP created_at
-    }
+      <h3>🔢 Sequence para código da conta</h3>
+      <p>Para garantir que cada conta corrente possua um identificador único e sequencial, foi criada a sequence <code>seq_cod_conta</code>, iniciando em <strong>10000</strong>.</p>
+      <pre><code>CREATE SEQUENCE IF NOT EXISTS dio_bank.seq_cod_conta START 10000;</code></pre>
 
-    PRODUTOS_FINANCEIROS {
-        BIGSERIAL id PK
-        VARCHAR nome
-        VARCHAR categoria
-        VARCHAR risco
-        NUMERIC aporte_minimo
-        VARCHAR liquidez
-    }
-
-    CONTAS_INVESTIMENTO {
-        BIGSERIAL id PK
-        BIGINT cliente_id FK
-        BIGINT produto_financeiro_id FK
-        NUMERIC saldo
-    }
-
-    METAS {
-        BIGSERIAL id PK
-        BIGINT cliente_id FK
-        VARCHAR objetivo
-        NUMERIC valor_necessario
-        DATE prazo
-    }
-
-    HISTORICO_ATENDIMENTOS {
-        BIGSERIAL id PK
-        BIGINT cliente_id FK
-        DATE data
-        VARCHAR canal
-        VARCHAR tema
-        TEXT resumo
-        BOOLEAN resolvido
-    }
-
-    CLIENTES ||--o{ CONTAS_CORRENTES : possui
-    CONTAS_CORRENTES ||--o{ TRANSACOES : registra
-    CLIENTES ||--o{ CONTAS_INVESTIMENTO : possui
-    PRODUTOS_FINANCEIROS ||--o{ CONTAS_INVESTIMENTO : investimento
-    CLIENTES ||--o{ METAS : define
-    CLIENTES ||--o{ HISTORICO_ATENDIMENTOS : atendimento
-  </div>
-
-<h3>🔢 Geração automática do código da conta (Sequence) </h3>
-
-<p>
-Para garantir que cada conta corrente possua um identificador único e sequencial,
-foi criada a sequence <code>seq_cod_conta</code>, iniciando em <strong>10000</strong>.
-</p>
-
-<p>
-Essa sequence é utilizada em conjunto com a trigger de criação de conta corrente,
-permitindo que o número da conta seja gerado automaticamente no momento da inserção do cliente.
-</p>
-
-<pre><code>
-CREATE SEQUENCE IF NOT EXISTS dio_bank.seq_cod_conta START 10000;
-</code></pre>
-
-
-<h3>📌 Importância das Triggers</h3>
-<p>No projeto, foram criadas <strong>triggers no banco de dados</strong> para automatizar processos críticos e garantir integridade financeira:</p>
-
-<h4>Atualização automática de saldo</h4>
-<p>Toda vez que uma transação é inserida na tabela <code>transacoes</code>, a trigger <code>trg_atualiza_saldo</code> executa a função <code>fn_atualiza_saldo</code> que:</p>
-<ul>
-    <li>Incrementa o saldo da conta em caso de crédito</li>
-    <li>Decrementa o saldo em caso de débito</li>
-    <li>Valida se o saldo + limite da conta é suficiente, evitando débitos indevidos</li>
-</ul>
-
-<pre><code>CREATE OR REPLACE FUNCTION dio_bank.fn_atualiza_saldo()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-AS $$
+      <h3>🔁 Atualização automática de saldo</h3>
+      <p>Toda vez que uma transação é inserida na tabela <code>transacoes</code>, a trigger <code>trg_atualiza_saldo</code> executa automaticamente:</p>
+      <ul>
+        <li>Incrementa o saldo em caso de crédito</li>
+        <li>Decrementa o saldo em caso de débito</li>
+        <li>Valida se o saldo + limite é suficiente</li>
+      </ul>
+      <pre><code>CREATE OR REPLACE FUNCTION dio_bank.fn_atualiza_saldo()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
 DECLARE
     saldo_atual_conta NUMERIC;
     limite_conta_valor NUMERIC;
@@ -320,84 +673,77 @@ BEGIN
         UPDATE dio_bank.contas_correntes
         SET saldo_atual = saldo_atual + NEW.valor
         WHERE id = NEW.conta_corrente_id;
-
     ELSIF NEW.tipo_operacao = 'debito' THEN
         IF saldo_atual_conta + limite_conta_valor < NEW.valor THEN
             RAISE EXCEPTION 'Saldo insuficiente para realizar o débito';
         END IF;
-
         UPDATE dio_bank.contas_correntes
         SET saldo_atual = saldo_atual - NEW.valor
         WHERE id = NEW.conta_corrente_id;
     END IF;
-
     RETURN NEW;
-END;
-$$;
+END; $$;
 
 CREATE TRIGGER trg_atualiza_saldo
 AFTER INSERT ON dio_bank.transacoes
-FOR EACH ROW
-EXECUTE FUNCTION dio_bank.fn_atualiza_saldo();
-</code></pre>
+FOR EACH ROW EXECUTE FUNCTION dio_bank.fn_atualiza_saldo();</code></pre>
 
-<h4>Criação automática de conta corrente</h4>
-<p>Quando um novo cliente é inserido na tabela <code>clientes</code>, a trigger <code>trg_criar_conta_corrente</code> cria automaticamente uma conta corrente associada, garantindo que todo cliente tenha sua conta pronta para transações.</p>
-
-<pre><code>CREATE OR REPLACE FUNCTION dio_bank.criar_conta_corrente()
+      <h3>🏦 Criação automática de conta corrente</h3>
+      <p>Quando um novo cliente é inserido, a trigger <code>trg_criar_conta_corrente</code> cria automaticamente uma conta corrente associada.</p>
+      <pre><code>CREATE OR REPLACE FUNCTION dio_bank.criar_conta_corrente()
 RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO dio_bank.contas_correntes(cliente_id)
     VALUES (NEW.id);
     RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+END; $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_criar_conta_corrente
 AFTER INSERT ON dio_bank.clientes
-FOR EACH ROW
-EXECUTE FUNCTION dio_bank.criar_conta_corrente();
-</code></pre>
+FOR EACH ROW EXECUTE FUNCTION dio_bank.criar_conta_corrente();</code></pre>
 
+      <blockquote>✅ Com isso, asseguramos integridade, evitamos inconsistências manuais e reduzimos a complexidade da lógica na camada da aplicação.</blockquote>
+    </section>
 
-<blockquote>✅ Com isso, asseguramos integridade, evitamos inconsistências manuais e reduzimos a complexidade da lógica na camada da aplicação.</blockquote>
+    <!-- API -->
+    <section id="api">
+      <div class="section-header">
+        <h2>2. ⚙️ API com FastAPI</h2>
+      </div>
+      <p>A aplicação possui uma API responsável por orquestrar a lógica de negócio, consultar o banco de dados e integrar com a LLM.</p>
 
+      <h3>📁 Estrutura do Projeto</h3>
+      <pre><code>api/
+├── core/          → configuração e base do sistema
+├── llm/
+│   ├── factory/   → criação do provider
+│   ├── prompt/    → templates de prompt
+│   ├── provider/  → integração com Ollama
+│   └── services/
+│       ├── bank_assistente.py
+│       ├── context_builder.py
+│       └── intent_classifier.py
+├── models/        → modelos do banco
+├── repository/    → acesso a dados
+├── router/        → endpoints
+├── schemas/       → validação (Pydantic)
+└── service/       → regras de negócio</code></pre>
 
-<hr>
+      <h3>🔗 Endpoints da API</h3>
+      <table>
+        <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill">POST</span></td><td><code>/api/v1/</code></td><td>Criar novo cliente</td></tr>
+          <tr><td><span class="pill">GET</span></td><td><code>/api/v1/?cod_account=1</code></td><td>Buscar cliente por código</td></tr>
+          <tr><td><span class="pill">GET</span></td><td><code>/api/v1/{cod_conta}?cod_account=1</code></td><td>Dados da conta + transações</td></tr>
+          <tr><td><span class="pill">POST</span></td><td><code>/api/v1/ask_assistent_ia</code></td><td>Enviar pergunta para a Aurora</td></tr>
+        </tbody>
+      </table>
 
-<h2>2. ⚙️ API com FastAPI</h2>
-
-<p>A aplicação possui uma API responsável por:</p>
-<ul>
-    <li>Orquestrar a lógica de negócio</li>
-    <li>Consultar o banco de dados</li>
-    <li>Integrar com a LLM</li>
-</ul>
-
-<h3>📁 Estrutura do Projeto</h3>
-<pre><code>├── api
-│   ├── core → configuração e base do sistema
-│   ├── llm → integração com IA
-│   │   ├── factory → criação do provider
-│   │   ├── prompt → templates de prompt
-│   │   ├── provider → integração com Ollama
-│   │   ├── services → regras da IA
-│   │   │   ├── bank_assistente.py
-│   │   │   ├── context_builder.py
-│   │   │   └── intent_classifier.py
-│   ├── models → modelos do banco
-│   ├── repository → acesso a dados
-│   ├── router → endpoints
-│   ├── schemas → validação (Pydantic)
-│   └── service → regras de negócio
-</code></pre>
-
-<h3>🔗 Endpoints da API</h3>
-
-<h4>👤 Cliente</h4>
-
-<p><strong>POST /api/v1/</strong> → Criar cliente</p>
-<pre><code>{
+      <details>
+        <summary>📥 Exemplo: Criar cliente</summary>
+        <pre><code>POST /api/v1/
+{
   "nome": "João Silva",
   "idade": 32,
   "profissao": "Analista",
@@ -405,345 +751,209 @@ EXECUTE FUNCTION dio_bank.criar_conta_corrente();
   "perfil_investidor": "moderado",
   "objetivo_principal": "Reserva de emergência",
   "aceita_risco": false
-}
-</code></pre>
+}</code></pre>
+      </details>
 
-<p><strong>GET /api/v1/?cod_account=1</strong> → Buscar cliente</p>
-
-<hr>
-
-<h4>🏦 Conta</h4>
-
-<p><strong>GET /api/v1/{cod_conta}?cod_account=1</strong> → Buscar dados da conta</p>
-
-<p><strong>Resposta:</strong></p>
-<pre><code>{
-  "client": {
-    "nome": "João Silva",
-    "idade": 32,
-    "renda_mensal": 5000
-  },
-  "transection": [
-    {
-      "descricao": "Supermercado",
-      "valor": 200
-    }
-  ]
-}
-</code></pre>
-
-<hr>
-
-<h4>🤖 Assistente IA</h4>
-
-<p><strong>POST /api/v1/ask_assistent_ia</strong></p>
-
-<p><strong>Request:</strong></p>
-<pre><code>{
+      <details>
+        <summary>📥 Exemplo: Assistente IA</summary>
+        <pre><code>// Request
+POST /api/v1/ask_assistent_ia
+{
   "question": "Qual meu saldo?",
   "cod_conta": 10000
 }
-</code></pre>
 
-<p><strong>Response:</strong></p>
-<pre><code>{
+// Response
+{
   "answer": "Seu saldo atual é de 68466.0"
-}
-</code></pre>
+}</code></pre>
+      </details>
 
-<blockquote>
-🚀 Esse endpoint integra diretamente com a LLM (Ollama) para gerar respostas inteligentes baseadas no contexto do usuário.
-</blockquote>
+      <blockquote>🚀 O endpoint <code>/ask_assistent_ia</code> integra diretamente com a LLM (Ollama) para gerar respostas inteligentes baseadas no contexto do usuário.</blockquote>
+    </section>
 
-<h2>3. 🤖 LLM com Ollama</h2>
+    <!-- LLM -->
+    <section id="llm">
+      <div class="section-header">
+        <h2>3. 🤖 LLM com Ollama</h2>
+      </div>
+      <p>A Aurora utiliza o modelo <strong>gemma3 via Ollama</strong>, permitindo execução totalmente local.</p>
 
-<p>A Aurora utiliza o modelo <strong>gemma3 via Ollama</strong>, permitindo execução local.</p>
+      <table>
+        <thead><tr><th>Componente</th><th>Função</th></tr></thead>
+        <tbody>
+          <tr><td><code>LLMFactory</code></td><td>Define qual provider usar</td></tr>
+          <tr><td><code>OllamaProvider</code></td><td>Integração com modelo local via <code>ainvoke</code></td></tr>
+          <tr><td><code>BankAssistant</code></td><td>Orquestra intenção + contexto + resposta</td></tr>
+          <tr><td><code>ContextBuilder</code></td><td>Busca apenas os dados relevantes no banco</td></tr>
+          <tr><td><code>IntentClassifier</code></td><td>Identifica se a pergunta é sobre transação, investimento ou meta</td></tr>
+        </tbody>
+      </table>
 
-<h3>🔧 Componentes</h3>
-<ul>
-    <li><code>LLMFactory</code> → define qual provider usar</li>
-    <li><code>OllamaProvider</code> → integração com modelo local</li>
-    <li><code>BankAssistant</code> → orquestra a resposta</li>
-</ul>
+      <blockquote>Os dados <strong>não</strong> vão no system prompt — são consultados dinamicamente e injetados no <code>human_prompt</code>, reduzindo alucinações e melhorando a performance.</blockquote>
+    </section>
 
-<h3>🧠 Funcionamento</h3>
-<ul>
-    <li>Recebe pergunta</li>
-    <li>Injeta contexto no prompt</li>
-    <li>Envia para LLM</li>
-    <li>Retorna resposta</li>
-</ul>
+    <!-- INTERFACE -->
+    <section id="interface">
+      <div class="section-header">
+        <h2>4. 💻 Interface Streamlit</h2>
+      </div>
+      <p>O Streamlit oferece interface de chat com suporte a <strong>texto e áudio</strong>. O usuário pode digitar ou gravar a pergunta — o áudio é transcrito via OpenAI STT antes de ser enviado à API.</p>
 
-<hr>
+      <h3>Diagrama de Fluxo do App</h3>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart TD
+  A[Início Streamlit] --> B[Configuração da página + OpenAI Client]
+  B --> C{Session State inicializado?}
+  C -->|Não| D[Inicializa modo, cod_conta e messages]
+  C -->|Sim| E
+  D --> E{Modo definido?}
+  E -->|Não| F[Exibe botões Texto ou Voz]
+  F -->|Texto| G[Define modo = texto]
+  F -->|Voz| H[Define modo = voz]
+  G --> E
+  H --> E
+  E -->|Sim| I{Conta definida?}
+  I -->|Não| J[Input número da conta]
+  J --> K{Conta válida?}
+  K -->|Sim| L[Salva cod_conta]
+  K -->|Não| M[Exibe erro]
+  L --> I
+  I -->|Sim| N[Exibe header + botão trocar]
+  N --> O[Exibe histórico de mensagens]
+  O --> P{Modo}
+  P -->|texto| Q[Usuário digita pergunta]
+  P -->|voz| R[Grava áudio]
+  R --> S[Salva arquivo temporário]
+  S --> T[Transcreve áudio OpenAI]
+  T --> U{Erro?}
+  U -->|Sim| V[Exibe erro]
+  U -->|Não| W[Obtém texto da pergunta]
+  W --> X[Remove arquivo temp]
+  Q --> Y{Existe pergunta?}
+  X --> Y
+  Y -->|Sim| Z[Adiciona msg user no histórico]
+  Z --> AA[Chama FastAPI Request.post]
+  AA --> AB{Resposta válida?}
+  AB -->|Não| AC[Resposta inválida]
+  AB -->|Sim| AD[Extrai answer]
+  AC --> AE
+  AD --> AE
+  AE[Adiciona resposta no histórico] --> AF[Exibe resposta na tela]
+  N --> AG{Clicou trocar?}
+  AG -->|Sim| AH[Reseta sessão]
+  AH --> E
+        </div>
+      </div>
+    </section>
 
-<h2>4. 💻 Streamlit (Interface)</h2>
+    <!-- CHATBOT -->
+    <section id="chatbot">
+      <div class="section-header">
+        <h2>5. 💬 Funcionamento do Chatbot</h2>
+      </div>
 
-<p>O Streamlit é responsável por:</p>
-<ul>
-    <li>Interface do usuário</li>
-    <li>Envio de perguntas para API</li>
-    <li>Exibição das respostas</li>
-    <li>Permite que a pergunta seja feita via <strong>texto ou áudio</strong></li>
-</ul>
+      <h3>Diagrama de Sequência</h3>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+sequenceDiagram
+  autonumber
+  participant UI as Streamlit UI
+  participant API as FastAPI Router
+  participant Factory as LLMFactory
+  participant Assistant as BankAssistant
+  participant Intent as IntentClassifier
+  participant Context as ContextBuilder
+  participant Service as AssistanteIaService
+  participant LLM as Provider LLM
+  participant DB as Database
 
-<h3>🔄 Fluxo</h3>
-<ol>
-    <li>Usuário digita pergunta ou grava áudio</li>
-    <li>Streamlit chama API</li>
-    <li>API processa</li>
-    <li>Retorna resposta</li>
-    <li>UI exibe resposta</li>
-</ol>
+  UI->>API: POST /api/v1/ask_assistent_ia (question, cod_conta)
+  API->>Factory: create()
+  Factory-->>API: provider
+  API->>Assistant: instanciar(provider)
+  API->>Assistant: ask(question, cod_conta, session_db)
+  Assistant->>Intent: detectar_intencao(question)
+  Intent-->>Assistant: tipo
+  Assistant->>Context: build(tipo, cod_conta, session_db)
+  Context->>Service: buscar_resumo(cod_conta)
+  Service->>DB: SELECT cliente
+  DB-->>Service: dados cliente
+  Service-->>Context: cliente
+  alt tipo contém "transacao"
+    Context->>Service: busca_transacoes(cod_conta)
+    Service->>DB: SELECT transacoes
+    DB-->>Service: dados
+    Service-->>Context: transacoes
+  end
+  alt tipo contém "investimento"
+    Context->>Service: busca_metas + busca_investimentos + busca_transacoes
+    Service->>DB: SELECT metas, investimentos, transacoes
+    DB-->>Service: dados
+    Service-->>Context: contexto completo
+  end
+  alt tipo contém "meta"
+    Context->>Service: busca_metas(cod_conta)
+    Service->>DB: SELECT metas
+    DB-->>Service: dados
+    Service-->>Context: metas
+  end
+  Context-->>Assistant: contexto serializado
+  Assistant->>Assistant: montar HUMAN_PROMPT
+  Assistant->>LLM: ainvoke(messages)
+  LLM-->>Assistant: resposta
+  Assistant-->>API: resposta_texto
+  API-->>UI: JSON { answer }
+        </div>
+      </div>
 
-<h2>Diagrama de Fluxo do App</h2>
+      <h3>💡 Exemplos de Perguntas</h3>
+      <ul>
+        <li>Qual meu saldo atual?</li>
+        <li>Qual foi meu último gasto?</li>
+        <li>Quanto gastei com supermercado?</li>
+        <li>Tenho metas cadastradas?</li>
+        <li>Qual investimento combina comigo?</li>
+        <li>Aurora, como posso organizar melhor minha vida financeira?</li>
+      </ul>
 
-   <div class="mermaid">
-        flowchart TD
-            A[Início Streamlit] --> B[Configuração da página + OpenAI Client]
+      <h3>🧾 Exemplo de Resposta</h3>
+      <blockquote>"Seu saldo atual é de R$ 68.466,00. Seu último gasto foi com supermercado no valor de R$ 930,00."</blockquote>
+    </section>
 
-            B --> C{Session State inicializado?}
-            C -->|Não| D[Inicializa modo, cod_conta e messages]
-            C -->|Sim| E
+    <!-- PROMPTS -->
+    <section id="prompts">
+      <div class="section-header">
+        <h2>📌 Engenharia de Prompt</h2>
+      </div>
+      <p>A Aurora utiliza dois tipos de prompt para garantir respostas precisas e sem alucinação. O contexto é injetado <strong>dinamicamente</strong> — nunca hardcoded.</p>
 
-            D --> E{Modo definido?}
-
-            %% ETAPA 1
-            E -->|Não| F[Exibe botões Texto ou Voz]
-            F -->|Texto| G[Define modo = texto]
-            F -->|Voz| H[Define modo = voz]
-            G --> E
-            H --> E
-
-            %% ETAPA 2
-            E -->|Sim| I{Conta definida?}
-            I -->|Não| J[Input número da conta]
-            J --> K{Conta válida?}
-            K -->|Sim| L[Salva cod_conta]
-            K -->|Não| M[Exibe erro]
-            L --> I
-
-            %% ETAPA 3 - CHAT
-            I -->|Sim| N[Exibe header + botão trocar]
-            N --> O[Exibe histórico de mensagens]
-
-            O --> P{Modo}
-
-            %% TEXTO
-            P -->|texto| Q[Usuário digita pergunta]
-
-            %% VOZ
-            P -->|voz| R[Grava áudio]
-            R --> S[Salva arquivo temporário]
-            S --> T[Transcreve áudio OpenAI]
-            T --> U{Erro?}
-            U -->|Sim| V[Exibe erro]
-            U -->|Não| W[Obtém texto da pergunta]
-            W --> X[Remove arquivo temp]
-
-            %% UNIFICAÇÃO
-            Q --> Y{Existe pergunta?}
-            X --> Y
-
-            %% PROCESSAMENTO
-            Y -->|Sim| Z[Adiciona msg user no histórico]
-            Z --> AA[Chama FastAPI Request.post]
-
-            AA --> AB{Resposta válida?}
-            AB -->|Não| AC[Resposta inválida]
-            AB -->|Sim| AD[Extrai answer]
-
-            AC --> AE
-            AD --> AE
-
-            AE[Adiciona resposta no histórico] --> AF[Exibe resposta na tela]
-
-            %% TROCAR
-            N --> AG{Clicou trocar?}
-            AG -->|Sim| AH[Reseta sessão]
-            AH --> E
-    </div>
-<hr>
-
-<h2>5. 💬 Funcionamento do Chatbot</h2>
-
-<h3>🔄 Fluxo completo</h3>
-<ol>
-    <li>Usuário envia pergunta</li>
-    <li>API recebe requisição</li>
-    <li><code>intent_classifier</code> identifica intenção</li>
-    <li><code>ContextBuilder</code> busca dados no banco</li>
-    <li>Contexto é montado</li>
-    <li>Prompt é gerado</li>
-    <li>LLM processa</li>
-    <li>Resposta retorna ao usuário</li>
-</ol>
-
-<h4>🧩 Diagrama De Sequência</h4>
-<div class="mermaid">
-    sequenceDiagram
-        autonumber
-        participant UI as Streamlit UI
-        participant API as FastAPI Router
-        participant Factory as LLMFactory
-        participant Assistant as BankAssistant
-        participant Intent as IntentClassifier
-        participant Context as ContextBuilder
-        participant Service as AssistanteIaService
-        participant LLM as Provider LLM
-        participant DB as Database
-
-        UI->>API: POST /api/v1/ask_assistent_ia (question, cod_conta)
-
-        API->>Factory: create()
-        Factory-->>API: provider
-
-        API->>Assistant: instanciar(provider)
-        API->>Assistant: ask(question, cod_conta, session_db)
-
-        Assistant->>Intent: detectar_intencao(question)
-        Intent-->>Assistant: tipo
-
-        Assistant->>Context: build(tipo, cod_conta, session_db)
-
-        Context->>Service: buscar_resumo(cod_conta)
-        Service->>DB: SELECT cliente
-        DB-->>Service: dados cliente
-        Service-->>Context: cliente
-
-        alt tipo contém "transacao"
-            Context->>Service: busca_transacoes(cod_conta)
-            Service->>DB: SELECT transacoes
-            DB-->>Service: dados
-            Service-->>Context: transacoes
-        end
-
-        alt tipo contém "investimento"
-            Context->>Service: busca_metas(cod_conta)
-            Service->>DB: SELECT metas
-            DB-->>Service: dados
-            Service-->>Context: metas
-
-            Context->>Service: busca_investimentos(perfil)
-            Service->>DB: SELECT investimentos
-            DB-->>Service: dados
-            Service-->>Context: investimentos
-
-            Context->>Service: busca_transacoes(cod_conta)
-            Service->>DB: SELECT transacoes
-            DB-->>Service: dados
-            Service-->>Context: transacoes
-        end
-
-        alt tipo contém "meta"
-            Context->>Service: busca_metas(cod_conta)
-            Service->>DB: SELECT metas
-            DB-->>Service: dados
-            Service-->>Context: metas
-        end
-
-        Context-->>Assistant: contexto serializado
-
-        Assistant->>Assistant: montar HUMAN_PROMPT
-        Assistant->>Assistant: criar mensagens (System + Human)
-
-        Assistant->>LLM: ainvoke(messages)
-        LLM-->>Assistant: resposta
-
-        Assistant-->>API: resposta_texto
-        API-->>UI: JSON { answer }
-    </div>
-
-<h3>💡 Exemplo de Perguntas</h3>
-<ul>
-    <li>Qual meu saldo atual?</li>
-    <li>Qual foi meu último gasto?</li>
-    <li>Quanto gastei com supermercado?</li>
-    <li>Tenho metas cadastradas?</li>
-    <li>Qual investimento combina comigo?</li>
-</ul>
-
-
-<hr>
-
-<h3>🧾 Exemplo de Resposta</h3>
-<p>"Seu saldo atual é de 68466.0. Seu último gasto foi com supermercado no valor de 930.0."</p>
-
-<h2>🎬 Exibição do funcionamento da aplicação</h2>
-<img src="assets/demostraca-da_aplicacao_aurora.gif" alt="Exibicao">
-
-<hr>
-
-<h2>📌 Engenharia de Prompt</h2>
-
-<p>
-A Aurora utiliza dois tipos de prompt para garantir respostas precisas e sem alucinação:
-</p>
-
-<ul>
-    <li><strong>System Prompt</strong> → define comportamento, regras e limites da IA</li>
-    <li><strong>Human Prompt</strong> → injeta os dados reais do cliente no contexto</li>
-</ul>
-
-<hr>
-
-<h3>🧠 Prompts Utilizados</h3>
-
-<details>
-    <summary><strong>📌 System Prompt (regras da IA)</strong></summary>
-    <pre><code>
-Aurora você é uma assistente financeira de um banco digital, 
-suas resposta são educada, amigável e objetiva.
+      <details>
+        <summary>📋 System Prompt — regras de comportamento da IA</summary>
+        <pre><code>Aurora você é uma assistente financeira de um banco digital,
+suas respostas são educadas, amigáveis e objetivas.
 
 Sua tarefa é responder perguntas usando SOMENTE os dados fornecidos.
 
 REGRAS IMPORTANTES:
-
-1. Use apenas os dados das seções:
-   - DADOS_CLIENTE
-   - TRANSACOES
-   - METAS
-   - INVESTIMENTOS
-
-2. Nunca invente informações.
-
-3. Nunca corrija a escrita do cliente 
-
+1. Use apenas: DADOS_CLIENTE, TRANSACOES, METAS, INVESTIMENTOS
+2. Nunca invente informações
+3. Nunca corrija a escrita do cliente
 4. Nunca julgue os gastos financeiros do cliente
-
-5. Último débito:
-   - tipo_operacao = debito
-   - mais recente por created_at
-
-6. Último crédito:
-   - tipo_operacao = credito
-   - mais recente por created_at
-
-7. Saldo:
-   - usar campo saldo_atual
-
-8. Investimentos:
-   - conservador → baixo risco
-   - moderado → equilibrado
-   - arrojado → maior risco
-
+5. Último débito: tipo_operacao="debito", mais recente por created_at
+6. Último crédito: tipo_operacao="credito", mais recente por created_at
+7. Saldo: campo saldo_atual
+8. Investimentos: conservador → baixo risco | moderado → equilibrado | arrojado → maior risco
 9. Sempre iniciar com o nome do usuário
+10. Listagem: apenas descrição, valor e data
+11. Calcule totais apenas quando solicitado
+12. Máximo 4 frases, sem markdown ou formatação especial</code></pre>
+      </details>
 
-10. Listagem de transações:
-   - apenas descrição, valor e data
-
-11. Cálculos:
-   - somar créditos e débitos corretamente
-
-12. Respostas:
-   - simples, objetiva, até 4 frases
-   - sem markdown ou formatação especial
-    </code></pre>
-</details>
-
-<details>
-    <summary><strong>📌 Human Prompt (template dinâmico)</strong></summary>
-    <pre><code>
-### PERGUNTA
+      <details>
+        <summary>🧩 Human Prompt — template dinâmico com contexto do banco</summary>
+        <pre><code>### PERGUNTA
 {PERGUNTA}
 
 ### DADOS_CLIENTE
@@ -759,41 +969,65 @@ REGRAS IMPORTANTES:
 {PRODUTOS_DISPONIVEIS}
 
 INSTRUÇÃO:
-Use apenas os dados acima para responder à pergunta.
-    </code></pre>
-</details>
+Use apenas os dados acima para responder à pergunta.</code></pre>
+      </details>
 
-<hr>
+      <h3>💡 Como funciona</h3>
+      <ol>
+        <li>Usuário envia pergunta</li>
+        <li>API identifica intenção (<code>transacao</code>, <code>investimento</code> ou <code>meta</code>)</li>
+        <li>Busca apenas os dados relevantes no banco</li>
+        <li>Monta o contexto e gera os prompts (System + Human)</li>
+        <li>Envia para o modelo Ollama</li>
+        <li>Retorna resposta ao usuário</li>
+      </ol>
+    </section>
 
-<h2>💡 Como funciona</h2>
+    <!-- CONCLUSÃO -->
+    <section id="conclusao">
+      <div class="section-header">
+        <h2>🎯 Conclusão</h2>
+      </div>
+      <p>A Aurora combina diversas tecnologias para criar uma solução completa e escalável no setor financeiro:</p>
+      <div class="cards">
+        <div class="card"><div class="card-icon">🗄️</div><h4>Banco Relacional</h4><p>Consistência, integridade e automação via triggers PostgreSQL.</p></div>
+        <div class="card"><div class="card-icon">⚙️</div><h4>FastAPI</h4><p>Orquestração de lógica de negócio e endpoints REST robustos.</p></div>
+        <div class="card"><div class="card-icon">🤖</div><h4>IA Local</h4><p>gemma3 via Ollama — privacidade total dos dados do cliente.</p></div>
+        <div class="card"><div class="card-icon">🎙️</div><h4>Multimodal</h4><p>Texto e voz com STT via OpenAI, acessível a todos os perfis.</p></div>
+        <div class="card"><div class="card-icon">🐳</div><h4>Docker</h4><p>Ambiente containerizado para fácil deploy e consistência.</p></div>
+        <div class="card"><div class="card-icon">🔗</div><h4>LangChain</h4><p>Gerenciamento de contexto e fluxo de conversação.</p></div>
+      </div>
+      <p style="margin-top:1.25rem">✅ Com essa arquitetura, a Aurora entrega uma solução moderna, segura e escalável, combinando inteligência artificial, dados estruturados, boas práticas de desenvolvimento e containerização.</p>
+      <a href="#visao-geral" class="back-top">↑ Voltar ao topo</a>
+    </section>
 
-<ol>
-    <li>Usuário envia pergunta</li>
-    <li>API identifica intenção</li>
-    <li>Busca dados no banco</li>
-    <li>Monta o contexto</li>
-    <li>Gera os prompts (System + Human)</li>
-    <li>Envia para o modelo (Ollama)</li>
-    <li>Retorna resposta ao usuário</li>
-</ol>
+  </div>
 
+  <footer>
+    <p>
+      Aurora · DIO Lab Bia do Futuro ·
+      <a href="https://github.com/JeanTheodoro/dio-lab-bia-do-futuro" target="_blank">GitHub</a> ·
+      <a href="https://youtu.be/aUGv6n3p3QA" target="_blank">Pitch</a> ·
+      Desenvolvido por Jean Theodoro
+    </p>
+  </footer>
 
-<h2>🎯 Conclusão</h2>
+</main>
 
-<p>A Aurora combina diversos conceitos essenciais de tecnologia para criar uma solução completa e escalável no setor financeiro.</p>
-
-<p>A aplicação integra:</p>
-<ul>
-    <li><strong>Banco de dados relacional</strong> 🗄️ para garantir consistência, integridade e automação de processos financeiros;</li>
-    <li><strong>Backend estruturado com FastAPI</strong> ⚙️ para orquestrar lógica de negócio, gerenciar endpoints e fornecer dados para a interface;</li>
-    <li><strong>Tecnologias de IA</strong> 🤖, incluindo o modelo local <strong>Ollama</strong>, para processar linguagem natural e fornecer respostas inteligentes e contextualizadas;</li>
-    <li><strong>LangChain</strong> para gerenciamento de contexto e fluxo de conversação;</li>
-    <li><strong>Consumo da API OpenAI</strong> para recursos de <strong>STT (Speech-to-Text)</strong>, permitindo que usuários façam perguntas via áudio ou texto;</li>
-    <li><strong>Interface interativa com Streamlit</strong> 💻 para exibir informações, gráficos e permitir interação amigável com o usuário;</li>
-    <li><strong>Docker e Docker Compose</strong> 🐳 para empacotar a aplicação, simplificar deploys e garantir consistência do ambiente de desenvolvimento e produção.</li>
-</ul>
-
-<p>✅ Com essa arquitetura, a Aurora entrega uma solução moderna, segura e escalável, combinando inteligência artificial, dados estruturados, boas práticas de desenvolvimento e tecnologias de containerização.</p>
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav#sidebar a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { threshold: 0.25 });
+  sections.forEach(s => observer.observe(s));
+</script>
 
 </body>
 </html>
