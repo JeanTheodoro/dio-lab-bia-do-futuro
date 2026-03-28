@@ -1,4 +1,4 @@
-# 🌅 Aurora — Assistente Financeira Inteligente
+# 🌟 Aurora — Assistente Financeira Inteligente
 
 > Agente financeiro com IA Generativa, desenvolvido como solução ao desafio [DIO Lab: Bia do Futuro](https://github.com/digitalinnovationone/dio-lab-bia-do-futuro).
 
@@ -9,8 +9,6 @@
 Segundo pesquisa da CNN Brasil, **43% dos brasileiros não têm dinheiro guardado para imprevistos**. A maioria gasta mais do que deveria, não tem hábito de gerir as próprias finanças e não consegue planejar o futuro — falta clareza para tomar boas decisões financeiras.
 
 A **Aurora** é uma assistente financeira educativa e proativa que transforma dados financeiros em decisões simples e acessíveis. O usuário não precisa entender planilhas ou relatórios: ele só precisa perguntar.
-
-> 🎥 **Pitch de apresentação:** [youtu.be/aUGv6n3p3QA](https://youtu.be/aUGv6n3p3QA)
 
 ---
 
@@ -85,7 +83,7 @@ Router FastAPI  →  POST /api/v1/ask_assistent_ia
 ├── 📁 assets/                           # Imagens e diagramas
 └── 📁 examples/                         # Referências de implementação
 ```
-
+[Executar a aplicação](src/README.md)
 ---
 
 ## 📄 Documentação
@@ -109,7 +107,7 @@ Define os critérios de qualidade do agente com cenários de teste reais:
 | Coerência | A resposta faz sentido para o perfil do cliente? |
 
 ### [05 — Pitch](./docs/05-pitch.md)
-Roteiro do pitch de 3 minutos com o problema, a solução, demonstração prática e diferencial da Aurora. Link do vídeo: [youtu.be/aUGv6n3p3QA](https://youtu.be/aUGv6n3p3QA).
+Roteiro do pitch de 3 minutos com o problema, a solução, demonstração prática e diferencial da Aurora. 
 
 ---
 
